@@ -1,3 +1,25 @@
-<p>
-  header works!
-</p>
+<mat-toolbar>
+  <a routerLink='' mat-stroked-button color="primary">
+    QnA
+  </a>
+
+  <span class="fill-space"></span>
+
+  <div>
+    <mat-form-field floatLabel="never">
+      <input type="search" matInput placeholder="Search">
+    </mat-form-field>
+
+    <a mat-button>
+      <mat-icon>search</mat-icon>
+    </a>
+
+    <a routerLink='/login' mat-stroked-button color="primary">
+      Log in
+    </a>
+    <a routerLink='/signup' mat-stroked-button color="primary">
+      Sign up
+    </a>
+
+  </div>
+</mat-toolbar>

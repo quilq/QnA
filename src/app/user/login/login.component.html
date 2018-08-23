@@ -1,3 +1,16 @@
-<p>
-  login works!
-</p>
+<div>
+  <mat-form-field>
+    <input matInput placeholder="Username" type="text">
+    <mat-icon matSuffix>person</mat-icon>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Password" [type]="hide ? 'password' : 'text'">
+    <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+  </mat-form-field>
+  
+  <button mat-raised-button color="primary">Log in</button>
+
+  <a routerLink="/signup" mat-button>Create an account</a>
+
+</div>
