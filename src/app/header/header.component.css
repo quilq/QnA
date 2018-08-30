@@ -2,3 +2,10 @@
     flex: 1 1 auto;
 }
 
+mat-form-field{
+    font-size: .75em;
+}
+
+mat-toolbar{
+    background-color: lightgreen;
+}

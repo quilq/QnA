@@ -7,6 +7,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
+import {MatDividerModule} from '@angular/material/divider';
 
 @NgModule({
     imports:[
@@ -17,6 +18,7 @@ import {MatIconModule} from '@angular/material/icon';
         MatFormFieldModule,
         MatInputModule,
         MatIconModule,
+        MatDividerModule,
         BrowserAnimationsModule
     ],
     exports:[
@@ -26,7 +28,8 @@ import {MatIconModule} from '@angular/material/icon';
         MatButtonModule,
         MatInputModule,
         MatFormFieldModule,
-        MatIconModule
+        MatIconModule,
+        MatDividerModule
     ]
 })
 

@@ -1,25 +1,47 @@
 <mat-grid-list cols="4" rowHeight="1:3">
-  <mat-grid-tile colspan="3">Popular Questions
+  <mat-grid-tile colspan="3">
     <mat-list>
+      <h1 mat-subheader>Popular Questions</h1>
       <mat-list-item>
-        <a routerLink="answers" mat-button>HTML</a> </mat-list-item>
+        <a matLine routerLink="answers">HTML</a>
+        <p matLine>What is HTML?</p>
+      </mat-list-item>
+      <mat-divider></mat-divider>
       <mat-list-item>
-        <a routerLink="answers" mat-button> CSS </a></mat-list-item>
+        <a matLine routerLink="answers"> CSS </a>
+        <p matLine>What is CSS</p>
+      </mat-list-item>
+      <mat-divider></mat-divider>
       <mat-list-item>
-        <a routerLink="answers" mat-button> Javascript </a></mat-list-item>
+        <a matLine routerLink="answers"> Javascript </a>
+        <p matLine>What is Javascript</p>
+      </mat-list-item>
+      <mat-divider></mat-divider>
       <mat-list-item>
-        <a routerLink="answers" mat-button>Angular </a></mat-list-item>
+        <a matLine routerLink="answers">Angular </a>
+        <p matLine>What is Angular</p>
+      </mat-list-item>
+      <mat-divider></mat-divider>
       <mat-list-item>
-        <a routerLink="answers" mat-button>Node.js </a></mat-list-item>
+        <a matLine routerLink="answers">Node.js </a>
+        <p matLine>What is Node.js</p>
+      </mat-list-item>
     </mat-list>
   </mat-grid-tile>
-  <mat-grid-tile>Topics
+
+  <mat-grid-tile>
     <mat-list>
+      <h1 mat-subheader>Topics</h1>
       <mat-list-item> HTML </mat-list-item>
+      <mat-divider></mat-divider>
       <mat-list-item> CSS </mat-list-item>
+      <mat-divider></mat-divider>
       <mat-list-item> Javascript </mat-list-item>
+      <mat-divider></mat-divider>
       <mat-list-item> Angular </mat-list-item>
+      <mat-divider></mat-divider>
       <mat-list-item> Node.js </mat-list-item>
     </mat-list>
+
   </mat-grid-tile>
 </mat-grid-list>
