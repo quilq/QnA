@@ -6,7 +6,7 @@ const url = 'mongodb://localhost:27017';
 
 let db;
 
-MongoClient.connect(url, (err, client) => {
+MongoClient.connect(url, { useNewUrlParser: true }, (err, client) => {
     if (err) {
         console.log('Unable to connect to MongoDB server.');
     }
@@ -19,7 +19,7 @@ MongoClient.connect(url, (err, client) => {
 function insertQuestion(topic, question) {
     db.collection(topic).insertOne({
         question: question,
-        answer: ''
+        answer: []
     }, (error, result) => {
         if (error) {
             console.log('Cannot insert document');
@@ -61,15 +61,27 @@ function updateQuestion(topic, oldQuestion, newQuestion) {
 }
 
 //Update answer
-function updateAnswer(topic, question, answer) {
+function updateAnswer(topic, question, oldAnswer, newAnswer) {
+    db.collection(topic).updateOne(
+        { question: question, answer: oldAnswer },
+        { $set: { 'answer.$': newAnswer } }
+    )
 }
 
 //Add answer
-function addAnswer(topic, question) {
+function addAnswer(topic, question, newAnswer) {
+    db.collection(topic).updateOne(
+        { question: question },
+        { $push: { answer: newAnswer } }
+    )
 }
 
 //Delete answer
 function deleteAnswer(topic, question, answer) {
+    db.collection(topic).updateOne(
+        { question: question },
+        { $pull: { answer: answer } }
+    )
 }
 
 //Middleware that is specific to this route
@@ -79,19 +91,19 @@ router.use(function timeLog(req, res, next) {
 })
 
 //Find questions
-router.get('/:topic/:question', (req, res) => {
+router.get('/q/:topic/:question', (req, res) => {
     findQuestion(req.params.topic, req.params.question);
     res.send(`Get API, topic: ${req.params.topic} & question: ${req.params.question}`);
 });
 
 //Create questions
-router.post('/:topic/:question', (req, res) => {
+router.post('/q/:topic/:question', (req, res) => {
     insertQuestion(req.params.topic, req.params.question);
     res.send(`Post API, topic: ${req.params.topic} & question: ${req.params.question}`);
 });
 
 //Update question
-router.put('/:topic/:oldquestion/:newquestion', (req, res) => {
+router.put('/q/:topic/:oldquestion/:newquestion', (req, res) => {
     updateQuestion(req.params.topic, req.params.oldquestion, req.params.newquestion);
     res.json(`Put API, topic: ${req.params.topic}, 
         old question: ${req.params.oldquestion} & 
@@ -99,9 +111,35 @@ router.put('/:topic/:oldquestion/:newquestion', (req, res) => {
 });
 
 //Delete question
-router.delete('/:topic/:question', (req, res) => {
+router.delete('/q/:topic/:question', (req, res) => {
     deleteQuestion(req.params.topic, req.params.question);
     res.json(`Delete API, topic: ${req.params.topic} & question: ${req.params.question}`);
 });
+
+//Add answer
+router.put('/a/:topic/:question/:newanswer', (req, res) => {
+    addAnswer(req.params.topic, req.params.question, req.params.newanswer);
+    res.json(`Add answer, topic ${req.params.topic}, 
+        question ${req.params.question} 
+        answer ${req.params.newanswer}`);
+});
+
+//Update answer
+router.put('/a/:topic/:question/:oldanswer/:newanswer', (req, res) => {
+    updateAnswer(req.params.topic, req.params.question, req.params.oldanswer, req.params.newanswer)
+    res.json(`Update answer, topic ${req.params.topic}, 
+        question ${req.params.question} 
+        old answer ${req.params.oldanswer}
+        new answer ${req.params.newanswer}`);
+});
+
+//Delete answer
+router.put('/a-del/:topic/:question/:answer', (req, res) => {
+    deleteAnswer(req.params.topic, req.params.question, req.params.answer);
+    res.json(`Delete answer, topic ${req.params.topic}, 
+        question ${req.params.question} 
+        answer ${req.params.answer}`);
+});
+
 
 module.exports = router;
