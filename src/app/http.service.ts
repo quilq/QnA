@@ -24,9 +24,10 @@ export class HttpService {
   }
 
   //Update question
-  updateQuestion(oldQuestion: Question, newQuestion: Question) {
+  updateQuestion(oldQuestion: Question, newQuestion: string) {
+    let id = oldQuestion._id;
     let url = 'api/q';
-    return this.httpClient.put(url, [oldQuestion, newQuestion]);
+    return this.httpClient.put(url, [id, newQuestion]);
   }
 
   //Delete question
@@ -37,9 +38,10 @@ export class HttpService {
   }
 
   //Update answer
-  updateAnswer(question: Question, answer: String, method: String) {
+  updateAnswer(question: Question, answer: string, method: string) {
     //method = add | update | delete
+    let id = question._id;
     let url = `api/a/${method}`;
-    return this.httpClient.put(url, [question, answer]);
+    return this.httpClient.put(url, [id, answer]);
   }
 }

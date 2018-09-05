@@ -1,6 +1,6 @@
 export class Question {
-    _id?: String;
-    topic: String;
-    question: String;
-    answers: [String]
+    _id?: string;
+    topic: string;
+    question: string;
+    answers: string[];
 }
