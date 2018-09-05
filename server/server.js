@@ -7,10 +7,6 @@ const port = process.env.port || 3000;
 const app = express();
 const server = http.createServer(app);
 
-//API for interacting with MongoDB
-const api = require('./routes/api');
-app.use('/api', api);
-
 //Output folder
 const publicPath = path.join(__dirname, './../dist/QnA');
 app.use(express.static(publicPath));
@@ -18,6 +14,10 @@ app.use(express.static(publicPath));
 //Parser
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+//API for interacting with MongoDB (define after body-parser middleware)
+const api = require('./routes/api');
+app.use('/api', api);
 
 //Send all other routes (always define last):
 app.get('*', (req, res) => {

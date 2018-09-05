@@ -14,6 +14,7 @@ import { LoginComponent } from './User/login/login.component';
 import { SignupComponent } from './User/signup/signup.component';
 import { MainPageComponent } from './main-page/main-page.component';
 import { AnswersComponent } from './main-page/answers/answers.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { AnswersComponent } from './main-page/answers/answers.component';
     BrowserModule,
     FormsModule,
     AppRoutingModule,
-    Material
+    Material,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

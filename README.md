@@ -2,10 +2,15 @@
 
 MEAN Stack QnA site
 
-## Build Angular
+## Development server (production)
+1. Run `ng build --aot` to build Angular app.
 
-Run `ng build --aot`
+2. Run `nodemon server/server.js` for a dev server. Navigate to `http://localhost:3000/`. The app will automatically reload if you change any of the source files.
 
-## Development server
+## Angular + Node dev environment
+1. Run `nodemon server/server.js --watch server` to start Express app.
 
-Run `nodemon server/server.js` for a dev server. Navigate to `http://localhost:3000/`. The app will automatically reload if you change any of the source files.
+2. Run Angular app in another terminal tab:
+`ng serve --proxy-config proxy.config.json`
+
+Navigate to `http://localhost:4200/`.
