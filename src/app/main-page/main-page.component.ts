@@ -12,14 +12,39 @@ export class MainPageComponent implements OnInit {
 
   constructor(private httpService: HttpService) { }
 
+  // Create some question:
+  // myQuestions: Question[] = [
+  //   new Question('HTML','what is <!DOCTYPE html>?',['']),
+  //   new Question('CSS','what is css padding?',['']),
+  //   new Question('JS','what is JavaScript Closures?',[''])
+  // ];
+
+  allQuestions: Question[];
+  allTopics: string[] = [];
+
   ngOnInit() {
+    //Create some question
+    // for (const iterator of this.myQuestions) {
+    //   this.createQuestion(iterator);
+    // }
+
+    this.httpService.getAllQuestions().subscribe((questions: Question[]) => {
+      this.allQuestions = questions;
+      for (const iterator of this.allQuestions) {
+        if (!this.allTopics.includes(iterator.topic)) {
+          this.allTopics.push(iterator.topic);
+        }
+      }
+    }, (error) => {
+      console.log(error);
+    });
   }
 
   createQuestion(question: Question) {
     this.httpService.createQuestion(question).subscribe();
   }
 
-  updateQuestion(oldQuestion: Question, newQuestion: Question) {
+  updateQuestion(oldQuestion: Question, newQuestion: string) {
     this.httpService.updateQuestion(oldQuestion, newQuestion).subscribe();
   }
 
@@ -27,7 +52,7 @@ export class MainPageComponent implements OnInit {
     this.httpService.deleteQuestion(question).subscribe();
   }
 
-  displayQuestion(question: Question) {
+  findQuestion(question: Question) {
     this.httpService.findQuestion(question).subscribe();
   }
 

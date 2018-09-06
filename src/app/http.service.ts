@@ -10,6 +10,10 @@ export class HttpService {
 
   constructor(private httpClient: HttpClient) { }
 
+  getAllQuestions(){
+    return this.httpClient.get('api/q');
+  }
+
   //Create questions
   createQuestion(question: Question) {
     let url = `api/q`;
@@ -38,10 +42,21 @@ export class HttpService {
   }
 
   //Update answer
-  updateAnswer(question: Question, answer: string, method: string) {
-    //method = add | update | delete
+  addAnswer(question: Question, answer: string) {
     let id = question._id;
-    let url = `api/a/${method}`;
+    let url = `api/a/add`;
+    return this.httpClient.put(url, [id, answer]);
+  }
+
+  updateAnswer(question: Question, oldAnswer: string, newAnswer: string) {
+    let id = question._id;
+    let url = `api/a/update`;
+    return this.httpClient.put(url, [id, oldAnswer, newAnswer]);
+  }
+
+  deleteAnswer(question: Question, answer: string) {
+    let id = question._id;
+    let url = `api/a/delete`;
     return this.httpClient.put(url, [id, answer]);
   }
 }

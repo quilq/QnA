@@ -1,24 +1,10 @@
 <mat-grid-list cols="4" rowHeight="1:3">
   <mat-grid-tile colspan="3">
-    <mat-list>
+    <mat-list >
       <h1 mat-subheader>Popular Questions</h1>
-      <mat-list-item>
-        <a matLine routerLink="answers">HTML Q1</a>
-        <p matLine>What is HTML?</p>
-        <button>Update</button>
-        <button>Delete</button>
-      </mat-list-item>
-      <mat-divider></mat-divider>
-      <mat-list-item>
-        <a matLine routerLink="answers"> HTML Q2 </a>
-        <p matLine>What is HTML?</p>
-        <button>Update</button>
-        <button>Delete</button>
-      </mat-list-item>
-      <mat-divider></mat-divider>
-      <mat-list-item>
-        <a matLine routerLink="answers"> HTML Q3 </a>
-        <p matLine>What is HTML?</p>
+      <mat-list-item *ngFor="let question of allQuestions">
+        <a matLine routerLink="answers">{{question.topic}}</a>
+        <p matLine>{{question.question}}</p>
         <button>Update</button>
         <button>Delete</button>
       </mat-list-item>
@@ -29,12 +15,10 @@
 
   <mat-grid-tile>
     <mat-list>
-      <h1 mat-subheader>Topics</h1>
-      <mat-list-item> <button> HTML </button> </mat-list-item>
-      <mat-divider></mat-divider>
-      <mat-list-item > <button> CSS </button>  </mat-list-item>
-      <mat-divider></mat-divider>
-      <mat-list-item > <button> JavaScript </button>  </mat-list-item>
+      <h1 mat-subheader>Popular Topics</h1>
+      <mat-list-item *ngFor="let topic of allTopics">  
+        <button>{{ topic }}</button>
+      </mat-list-item>
     </mat-list>
 
   </mat-grid-tile>

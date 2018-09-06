@@ -49,32 +49,33 @@ function updateQuestion(id, newQuestion) {
         });
 }
 
-function updateAnswer(id, answer) {
+function updateAnswer(id, oldAnswer, newAnswer) {
     db.collection('qna').updateOne(
-        { id: new ObjectID(id), answer: question.oldAnswer },
-        { $set: { 'answer.$': answer } }
+        { _id: new ObjectID(id), answer: oldAnswer },
+        { $set: { 'answer.$': newAnswer } }
     )
+    console.log(id, oldAnswer, newAnswer)
 }
 
 function addAnswer(id, answer) {
     db.collection('qna').updateOne(
-        { id: new ObjectID(id) },
+        { _id: new ObjectID(id) },
         { $push: { answer: answer } }
     )
 }
 
 function deleteAnswer(id, answer) {
     db.collection('qna').updateOne(
-        { id: new ObjectID(id) },
+        { _id: new ObjectID(id) },
         { $pull: { answer: answer } }
     )
 }
 
-//Middleware that is specific to this route
-router.use(function timeLog(req, res, next) {
-    console.log('Time: ', Date.now());
-    next();
-})
+//Timelog middleware that is specific to this route
+// router.use(function timeLog(req, res, next) {
+//     console.log('Time: ', Date.now());
+//     next();
+// })
 
 //Create questions
 router.post('/q', (req, res) => {
@@ -93,6 +94,17 @@ router.get('/q/:id', (req, res) => {
     })
 });
 
+//Fetch all questions
+router.get('/q', (req, res) => {
+    db.collection('qna').find().toArray((err, doc) => {
+        if (err) {
+            console.log('Unable to fetch data ', err);
+        } else {
+            res.json(doc);
+        }
+    });
+})
+
 //Update question
 router.put('/q', (req, res) => {
     updateQuestion(req.body.id, req.body.newQuestion);
@@ -110,7 +122,7 @@ router.put('/a/add', (req, res) => {
 
 //Update answer 
 router.put('/a/update', (req, res) => {
-    updateAnswer(req.body.id, req.body.answer);
+    updateAnswer(req.body.id, req.body.oldAnswer, req.body.newAnswer);
 });
 
 //Delete answer

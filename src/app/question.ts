@@ -3,4 +3,9 @@ export class Question {
     topic: string;
     question: string;
     answers: string[];
+    constructor(topic: string, question: string, answers: string[]){
+        this.topic = topic;
+        this.question = question;
+        this.answers = answers;
+    }
 }

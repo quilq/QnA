@@ -14,16 +14,16 @@ export class AnswersComponent implements OnInit {
   ngOnInit() {
   }
 
-  addAnswer(question: Question, answer: String) {
-    this.httpService.updateAnswer(question, answer, 'add').subscribe();
+  addAnswer(question: Question, answer: string) {
+    this.httpService.addAnswer(question, answer).subscribe();
   }
 
-  updateAnswer(question: Question, answer: String) {
-    this.httpService.updateAnswer(question, answer, 'update').subscribe();
+  updateAnswer(question: Question, oldAnswer: string, newAnswer: string) {
+    this.httpService.updateAnswer(question, oldAnswer, newAnswer).subscribe();
   }
 
-  deleteAnswer(question: Question, answer: String) {
-    this.httpService.updateAnswer(question, answer, 'delete').subscribe();
+  deleteAnswer(question: Question, answer: string) {
+    this.httpService.deleteAnswer(question, answer).subscribe();
   }
 
 }
