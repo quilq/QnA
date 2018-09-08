@@ -1,13 +1,25 @@
 <app-header></app-header>
-<div>Question:</div>
-<hr>
-<div>Answers: *** <button>Update answer</button> <button>Delete answer</button></div>
-<hr>
-<div>Answers: *** <button>Update answer</button> <button>Delete answer</button></div>
-<hr>
-<div>Answers: *** <button>Update answer</button> <button>Delete answer</button></div>
-<hr>
-
-<button>Add answer</button>
-
+<div>Question: 
+    <h1>{{question.question}}</h1>
+</div>
+<div>Tag: {{question.tag}}</div>
+<mat-divider></mat-divider>
+<div *ngFor="let answer of answers; let i = index">
+    <span>Answers: {{answers[i].isCorrectAnswer ? 'Accepted answer.' : '' }} </span>     
+    <mat-icon matSuffix>{{answers[i].isCorrectAnswer ? 'check' : '' }}</mat-icon>
+    <button mat-button matTooltip="Edit answer"><mat-icon matSuffix>edit</mat-icon></button>
+    <button mat-button matTooltip="Delete answer"><mat-icon matSuffix>clear</mat-icon></button>
+    <p>{{answers[i].answer}}</p>
+    <mat-divider></mat-divider>
+</div>
+<mat-expansion-panel hideToggle>
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+        <mat-icon matSuffix>add</mat-icon> Add your answer
+        </mat-panel-title>
+    </mat-expansion-panel-header>
+    <mat-form-field>
+        <textarea matInput placeholder="Your answer"></textarea>
+    </mat-form-field>
+</mat-expansion-panel>
 <app-footer></app-footer>

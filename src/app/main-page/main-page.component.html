@@ -1,23 +1,25 @@
 <mat-grid-list cols="4" rowHeight="1:3">
   <mat-grid-tile colspan="3">
-    <mat-list >
+    <mat-list>
+      <button mat-button><mat-icon matSuffix>add</mat-icon> Ask your question </button>
       <h1 mat-subheader>Popular Questions</h1>
       <mat-list-item *ngFor="let question of allQuestions">
-        <a matLine routerLink="answers">{{question.topic}}</a>
-        <p matLine>{{question.question}}</p>
-        <button>Update</button>
-        <button>Delete</button>
+        <a matLine>{{question.tag}}</a>
+        <p matLine [routerLink]="['/answers', question._id]">
+          {{question.question}}
+        </p>
+        <button mat-button matTooltip="Edit question"><mat-icon matSuffix>edit</mat-icon></button>
+        <button mat-button matTooltip="Delete question"><mat-icon matSuffix>clear</mat-icon></button>
+        <mat-divider></mat-divider>
       </mat-list-item>
-      <mat-divider></mat-divider>
-      <button>Add Question</button>
     </mat-list>
   </mat-grid-tile>
 
   <mat-grid-tile>
     <mat-list>
-      <h1 mat-subheader>Popular Topics</h1>
-      <mat-list-item *ngFor="let topic of allTopics">  
-        <button>{{ topic }}</button>
+      <h1 mat-subheader>Popular tags</h1>
+      <mat-list-item *ngFor="let tag of allTags">
+        <p (click)="filterTag(tag)">{{ tag }}</p>
       </mat-list-item>
     </mat-list>
 

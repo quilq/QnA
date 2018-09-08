@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Question, Answer } from '../question';
 
 @Component({
   selector: 'app-user',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserComponent implements OnInit {
 
+  user = {
+    answers: [new Question('','',[new Answer()])],
+    questions: [new Question('','',[new Answer()])]
+  }
+
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
 }

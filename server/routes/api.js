@@ -9,8 +9,9 @@ let db;
 MongoClient.connect(url, { useNewUrlParser: true }, (err, client) => {
     if (err) {
         console.log('Unable to connect to MongoDB server.');
+    } else {
+        console.log('Connected to MongoDB server.');
     }
-    console.log('Connected to MongoDB server.');
 
     db = client.db('mydb');
 });
