@@ -14,7 +14,8 @@ export class AnswersComponent implements OnInit {
   ) { }
 
   answers: Answer[] = [new Answer()];
-  question: Question = new Question('','', this.answers);
+  question: Question = new Question();
+  relatedQuestions: Question[] = [new Question()];
 
   ngOnInit() {
     let id = this.route.snapshot.paramMap.get('id');
@@ -22,6 +23,9 @@ export class AnswersComponent implements OnInit {
       this.question = question;
       this.answers = question.answers;
     });
+  }
+
+  findRelatedQuestions(){
   }
 
   addAnswer(question: Question, answer: Answer) {
@@ -35,5 +39,15 @@ export class AnswersComponent implements OnInit {
   deleteAnswer(question: Question, answer: Answer) {
     this.httpService.deleteAnswer(question, answer).subscribe();
   }
+
+  onAddAnswer() {
+  }
+
+  onUpdateAnswer() {
+  }
+
+  onDeleteAnswer() {
+  }
+
 
 }

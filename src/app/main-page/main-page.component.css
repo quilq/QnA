@@ -1,8 +1,17 @@
-mat-grid-tile{
-    background: lightblue;
-}
-
 p:hover{
     color: blue;
     cursor: pointer;
+}
+
+.left, .right{
+    padding: 2%;
+}
+
+.all-tags, .all-questions {
+    margin: 1% 2%;
+    padding: 1%;
+}
+
+.small-icon { 
+    font-size: 18px; 
 }

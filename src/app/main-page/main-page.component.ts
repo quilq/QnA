@@ -14,30 +14,30 @@ export class MainPageComponent implements OnInit {
 
   //Create some questions:
   // myQuestions: Question[] = [
-  //   new Question('HTML', 'HTML Question 1?',
-  //     [{ isCorrectAnswer: true, answer: 'Answer 1-1 html' },
-  //     { isCorrectAnswer: false, answer: 'Answer 1-2 html' },
-  //     { isCorrectAnswer: false, answer: 'Answer 1-3 html' }]),
-  //   new Question('HTML', 'HTML Question 2?',
-  //     [{ isCorrectAnswer: true, answer: 'Answer 2-1 html' },
-  //     { isCorrectAnswer: false, answer: 'Answer 2-2 html' },
-  //     { isCorrectAnswer: false, answer: 'Answer 2-3 html' }]),
-  //   new Question('CSS', 'CSS Question 1?',
-  //     [{ isCorrectAnswer: true, answer: 'Answer 1-1 css' },
-  //     { isCorrectAnswer: false, answer: 'Answer 1-2 css' },
-  //     { isCorrectAnswer: false, answer: 'Answer 1-3 css' }]),
-  //   new Question('CSS', 'CSS Question 2?',
-  //     [{ isCorrectAnswer: true, answer: 'Answer 2-1 css' },
-  //     { isCorrectAnswer: false, answer: 'Answer 2-2 css' },
-  //     { isCorrectAnswer: false, answer: 'Answer 2-3 css' }]),
-  //   new Question('Javascript', 'Javascript Question 1?',
-  //     [{ isCorrectAnswer: true, answer: 'Answer 1-1 js' },
-  //     { isCorrectAnswer: false, answer: 'Answer 1-2 js' },
-  //     { isCorrectAnswer: false, answer: 'Answer 1-3 js' }]),
-  //   new Question('Javascript', 'Javascript Question 2?',
-  //     [{ isCorrectAnswer: true, answer: 'Answer 2-1 js' },
-  //     { isCorrectAnswer: false, answer: 'Answer 2-2 js' },
-  //     { isCorrectAnswer: false, answer: 'Answer 2-3 js' }]),
+  //   new Question('HTML', 'HTML Question 1?', 'Admin',
+  //     [{ isCorrectAnswer: true, answeredByUser: 'Admin',answer: 'Answer 1-1 html' },
+  //     { isCorrectAnswer: false, answeredByUser: 'Admin',answer: 'Answer 1-2 html' },
+  //     { isCorrectAnswer: false, answeredByUser: 'Admin',answer: 'Answer 1-3 html' }]),
+  //   new Question('HTML', 'HTML Question 2?','Admin',
+  //   [{ isCorrectAnswer: true, answeredByUser: 'Admin',answer: 'Answer 2-1 html' },
+  //   { isCorrectAnswer: false, answeredByUser: 'Admin',answer: 'Answer 2-2 html' },
+  //   { isCorrectAnswer: false, answeredByUser: 'Admin',answer: 'Answer 2-3 html' }]),
+  //   new Question('CSS', 'CSS Question 1?','Admin',
+  //   [{ isCorrectAnswer: true, answeredByUser: 'Admin',answer: 'Answer 1-1 html' },
+  //   { isCorrectAnswer: false, answeredByUser: 'Admin',answer: 'Answer 1-2 html' },
+  //   { isCorrectAnswer: false, answeredByUser: 'Admin',answer: 'Answer 1-3 html' }]),
+  //   new Question('CSS', 'CSS Question 2?','Admin',
+  //   [{ isCorrectAnswer: true, answeredByUser: 'Admin',answer: 'Answer 2-1 html' },
+  //   { isCorrectAnswer: false, answeredByUser: 'Admin',answer: 'Answer 2-2 html' },
+  //   { isCorrectAnswer: false, answeredByUser: 'Admin',answer: 'Answer 2-3 html' }]),
+  //   new Question('Javascript', 'Javascript Question 1?','Admin',
+  //   [{ isCorrectAnswer: true, answeredByUser: 'Admin',answer: 'Answer 1-1 html' },
+  //   { isCorrectAnswer: false, answeredByUser: 'Admin',answer: 'Answer 1-2 html' },
+  //   { isCorrectAnswer: false, answeredByUser: 'Admin',answer: 'Answer 1-3 html' }]),
+  //   new Question('Javascript', 'Javascript Question 2?','Admin',
+  //   [{ isCorrectAnswer: true, answeredByUser: 'Admin',answer: 'Answer 2-1 html' },
+  //   { isCorrectAnswer: false, answeredByUser: 'Admin',answer: 'Answer 2-2 html' },
+  //   { isCorrectAnswer: false, answeredByUser: 'Admin',answer: 'Answer 2-3 html' }]),
   // ];
 
   allQuestions: Question[] = [];
@@ -77,6 +77,15 @@ export class MainPageComponent implements OnInit {
 
   deleteQuestion(question: Question) {
     this.httpService.deleteQuestion(question).subscribe();
+  }
+
+  onUpdateQuestion(){
+  }
+
+  onDeleteQuestion(){
+  }
+
+  onCreateQuestion(){
   }
 
 }

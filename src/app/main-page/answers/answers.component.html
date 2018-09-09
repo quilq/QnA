@@ -1,25 +1,57 @@
 <app-header></app-header>
-<div>Question: 
-    <h1>{{question.question}}</h1>
+<div fxLayout="row" fxLayoutAlign="space-between start" class="container">
+    <div class="left" fxFlex="70">
+        <h1>{{question.question}}</h1>
+        <p>tag: {{question.tag}}</p>
+        <p>                   
+            <mat-icon class="small-icon" matSuffix>person</mat-icon>
+            {{question.askedByUser}}</p>
+        <mat-divider></mat-divider>
+        <div *ngFor="let answer of answers; let i = index" class="all-answers" fxLayout="column" fxLayoutAlign=" none">
+            <div>
+                <span>{{answers[i].isCorrectAnswer ? 'Accepted answer.' : '' }} </span>
+                <mat-icon matSuffix>{{answers[i].isCorrectAnswer ? 'check' : '' }}</mat-icon>
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="space-between none">
+                <p>{{answers[i].answer}}</p>
+                <div fxLayout="row">
+                    <p (click)="onUpdateAnswer()" mat-button matTooltip="Edit answer">
+                        <mat-icon class="small-icon" matSuffix>edit</mat-icon>
+                    </p>
+                    <p (click)="onDeleteAnswer()" mat-button matTooltip="Delete answer">
+                        <mat-icon class="small-icon" matSuffix>clear</mat-icon>
+                    </p>
+                </div>
+            </div>
+
+            <div>
+                <div>
+                    <mat-icon class="small-icon" matSuffix>person</mat-icon>
+                    {{answers[i].answeredByUser}}</div>
+                <mat-divider></mat-divider>
+            </div>
+        </div>
+    </div>
+
+    <div class="right" fxFlex="30">
+        <mat-expansion-panel hideToggle class="right">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <mat-icon (click)="onAddAnswer()" matSuffix>add</mat-icon> Add your answer
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <mat-form-field>
+                <textarea matInput placeholder="Your answer"></textarea>
+            </mat-form-field>
+            <mat-action-row>
+                <button mat-raised-button>Add answer</button>
+            </mat-action-row>
+        </mat-expansion-panel>
+        <div class="related-questions">
+            <h2> Related questions </h2>
+            <p *ngFor="let question of relatedQuestions"> {{question.question}}</p>
+        </div>
+    </div>
 </div>
-<div>Tag: {{question.tag}}</div>
-<mat-divider></mat-divider>
-<div *ngFor="let answer of answers; let i = index">
-    <span>Answers: {{answers[i].isCorrectAnswer ? 'Accepted answer.' : '' }} </span>     
-    <mat-icon matSuffix>{{answers[i].isCorrectAnswer ? 'check' : '' }}</mat-icon>
-    <button mat-button matTooltip="Edit answer"><mat-icon matSuffix>edit</mat-icon></button>
-    <button mat-button matTooltip="Delete answer"><mat-icon matSuffix>clear</mat-icon></button>
-    <p>{{answers[i].answer}}</p>
-    <mat-divider></mat-divider>
-</div>
-<mat-expansion-panel hideToggle>
-    <mat-expansion-panel-header>
-        <mat-panel-title>
-        <mat-icon matSuffix>add</mat-icon> Add your answer
-        </mat-panel-title>
-    </mat-expansion-panel-header>
-    <mat-form-field>
-        <textarea matInput placeholder="Your answer"></textarea>
-    </mat-form-field>
-</mat-expansion-panel>
 <app-footer></app-footer>
