@@ -1,9 +1,11 @@
+require('./config/config');
+
 const express = require('express');
 const http = require('http');
 const path = require('path');
 const bodyParser = require('body-parser');
 
-const port = process.env.port || 3000;
+const port = process.env.PORT;
 const app = express();
 const server = http.createServer(app);
 

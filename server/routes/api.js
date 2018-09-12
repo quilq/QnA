@@ -3,8 +3,10 @@ const router = express.Router();
 const MongoClient = require('mongodb').MongoClient;
 const ObjectID = require('mongodb').ObjectID;
 const url = 'mongodb://localhost:27017';
+const { User } = require('./../models/user');
 
-let db;
+var {authenticate} = require('./../middleware/authenticate');
+var db;
 
 MongoClient.connect(url, { useNewUrlParser: true }, (err, client) => {
     if (err) {
@@ -130,5 +132,48 @@ router.put('/a/update', (req, res) => {
 router.put('/a/delete', (req, res) => {
     deleteAnswer(req.body.id, req.body.answer);
 });
+
+//Get user info (private route)
+router.get('/user/me', authenticate, (req, res)=>{
+    res.send(req.user);
+})
+
+//Sign up route
+router.post('/user/signup', (req, res) => {
+    var body = { email: req.body.email, password: req.body.password };
+    var user = new User(body);
+    user.save().then(() => {
+        return user.generateAuthToken();
+    }).then((token) => {
+        res.header('x-auth', token).send(user);
+    }).catch((e) => {
+        res.status(400).send(e);
+    })
+})
+
+//Log in route
+router.post('/user/login', (req, res) => {
+    var body = { email: req.body.email, password: req.body.password };
+
+    //Find user
+    User.findByCredentials(body.email, body.password).then((user) => {
+        return user.generateAuthToken().then((token) => {
+            res.header('x-auth', token).send(user);
+        });
+    }).catch((e) => {
+        res.status(400).send(e);
+    });
+})
+
+//Log out route (+ remove token)
+router.delete('/user/me/token', authenticate, (req, res) => {
+    req.user.removeToken(req.token).then(() => {
+        //If successfuly remove token
+        res.status(200).send();
+    }, () => {
+        //If fail to remove token
+        res.status(400).send();
+    })
+})
 
 module.exports = router;
