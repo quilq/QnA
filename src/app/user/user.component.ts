@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from './user';
+import { HttpService } from '../http.service';
 
 @Component({
   selector: 'app-user',
@@ -8,10 +9,15 @@ import { User } from './user';
 })
 export class UserComponent implements OnInit {
 
-  constructor() { }
+  constructor(private httpService: HttpService) { }
 
   user: User = new User();
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log('is logged in: ', this.httpService.isLoggedin());
+    console.log('token: ', localStorage.getItem('token'));
+  }
+
+  onGetUser(token: string){}
 
 }

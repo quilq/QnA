@@ -52,13 +52,15 @@ UserSchema.methods.generateAuthToken = function () {
     //Avoid arrow function to use 'this' keyword
     var user = this;
     var access = 'auth';
+
     var token = jwt.sign({ _id: user._id.toHexString(), access }, process.env.JWT_SECRET).toString();
 
-    user.tokens = user.tokens.concat([{ access, token }]);
+    // user.tokens = user.tokens.concat([{ access, token }]);
+    // return user.save().then(() => {
+    //     return token;
+    // })
 
-    return user.save().then(() => {
-        return token;
-    })
+    return Promise.resolve(token);
 }
 
 //Find user with model method
@@ -88,27 +90,35 @@ UserSchema.statics.findByToken = function(token){
     var User = this;
     var decoded;
 
+    // return jwt.verify(token, process.env.JWT_SECRET, (err, decoded) =>{
+    //     if (err) {
+    //         return Promise.reject(err);
+    //     }
+    //     return Promise.resolve();
+    // })
+
     try{
         decoded = jwt.verify(token, process.env.JWT_SECRET);
+
     } catch(e){
         return Promise.reject();
     }
 
     return User.findOne({
         _id: decoded._id,
-        'tokens.token':token,
-        'tokens.access':'auth'
+        // 'tokens.token':token,
+        // 'tokens.access':'auth'
     });
 }
 
-UserSchema.methods.removeToken = function (token) {
-    var user = this;
-    return user.update({
-        $pull: {
-            tokens: { token }
-        }
-    });
-}
+// UserSchema.methods.removeToken = function (token) {
+//     var user = this;
+//     return user.update({
+//         $pull: {
+//             tokens: { token }
+//         }
+//     });
+// }
 
 //Modify object sent back to user (only send id & email)
 UserSchema.methods.toJSON = function(){

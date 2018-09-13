@@ -7,13 +7,22 @@
 
   <span class="fill-space"></span>
 
-  <div>
+  <div *ngIf="!isLoggedin">
     <a routerLink='/login' mat-stroked-button color="primary">
       Log in
     </a>
     <a routerLink='/signup' mat-stroked-button color="primary">
       Sign up
     </a>
+
+  </div>
+  <div *ngIf="isLoggedin">
+    <a routerLink='/user' mat-stroked-button color="primary">
+      User
+    </a>
+    <button (click)="onLogout()" mat-stroked-button color="primary">
+      Log out
+    </button>
 
   </div>
 </mat-toolbar>

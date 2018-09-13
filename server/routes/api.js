@@ -165,15 +165,16 @@ router.post('/user/login', (req, res) => {
     });
 })
 
-//Log out route (+ remove token)
+//Log out route
 router.delete('/user/me/token', authenticate, (req, res) => {
-    req.user.removeToken(req.token).then(() => {
+    if (req.user) {
+        // req.user.removeToken(req.token).then(() => {
         //If successfuly remove token
         res.status(200).send();
-    }, () => {
+    } else {
         //If fail to remove token
         res.status(400).send();
-    })
+    }
 })
 
 module.exports = router;

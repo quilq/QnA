@@ -1,4 +1,4 @@
-<div>
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
   <a routerLink='' mat-button>
     <h1>
       QnA
@@ -6,12 +6,12 @@
   </a>
 
   <mat-form-field>
-    <input matInput placeholder="Username" type="text">
+    <input matInput placeholder="Username" type="text" formControlName="email">
     <mat-icon matSuffix>person</mat-icon>
   </mat-form-field>
 
   <mat-form-field>
-    <input matInput placeholder="Password" [type]="hide ? 'password' : 'text'">
+    <input matInput placeholder="Password" [type]="hide ? 'password' : 'text'" formControlName="password">
     <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
   </mat-form-field>
 
@@ -19,4 +19,4 @@
 
   <a routerLink="/signup" mat-button>Create an account</a>
 
-</div>
+</form>

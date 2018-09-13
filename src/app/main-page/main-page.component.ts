@@ -12,7 +12,7 @@ export class MainPageComponent implements OnInit {
 
   constructor(private httpService: HttpService) { }
 
-  //Create some questions:
+  // // Create some questions:
   // myQuestions: Question[] = [
   //   new Question('HTML', 'HTML Question 1?', 'Admin',
   //     [{ isCorrectAnswer: true, answeredByUser: 'Admin',answer: 'Answer 1-1 html' },
@@ -45,7 +45,7 @@ export class MainPageComponent implements OnInit {
   allTags: string[] = [];
 
   ngOnInit() {
-    // Create some question:
+    // // Create some question:
     // for (const iterator of this.myQuestions) {
     //   this.createQuestion(iterator);
     // }
