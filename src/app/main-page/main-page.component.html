@@ -2,14 +2,15 @@
   <div class="left" fxFlex="70">
     <div>
       <mat-form-field floatLabel="never">
-        <input matInput type="search" matInput placeholder="Ask your question" appearance="legacy" autocomplete="off">
+        <input matInput type="search" matInput placeholder="Ask your question" appearance="legacy" autocomplete="off"
+          #newQuestion>
       </mat-form-field>
-      <a mat-button>
+      <a mat-button (click)="onCreateQuestion(newQuestion)">
         <mat-icon matSuffix>add</mat-icon>
       </a>
     </div>
     <h1>Recent Questions</h1>
-    <div *ngFor="let question of allQuestions" class="all-questions">
+    <div *ngFor="let question of allQuestions; let i = index" class="all-questions">
       <div fxLayout="row" fxLayoutAlign="space-between none">
         <div>
           <p matLine [routerLink]="['/answers', question._id]">
@@ -17,18 +18,27 @@
           </p>
           <p>tag: {{question.tag}}</p>
           <p>
-              <mat-icon class="small-icon" matSuffix>person</mat-icon>
-              {{question.askedByUser}}
-            </p>
+            <mat-icon class="small-icon" matSuffix>person</mat-icon>
+            {{question.askedByUser}}
+          </p>
         </div>
         <span fxLayout="row">
-          <p (click)="onUpdateQuestion()" matTooltip="Edit question">
+          <p (click)="onUpdateQuestion(i)" matTooltip="Edit question">
             <mat-icon class="small-icon" matSuffix>edit</mat-icon>
           </p>
-          <p (click)="onDeleteQuestion()" matTooltip="Delete question" >
+          <p (click)="onDeleteQuestion(i)" matTooltip="Delete question">
             <mat-icon class="small-icon" matSuffix>clear</mat-icon>
           </p>
         </span>
+      </div>
+      <div *ngIf="editable[i]">
+        <mat-form-field>
+          <textarea matInput placeholder="Edit this question" #updatedQuestion></textarea>
+        </mat-form-field>
+        <div>
+          <button mat-raised-button (click)="onCancel(i)">Cancel</button>
+          <button mat-raised-button (click)="onUpdate(i, updatedQuestion.value)">Update</button>
+        </div>
       </div>
       <mat-divider></mat-divider>
     </div>
@@ -49,38 +59,3 @@
     </div>
   </div>
 </div>
-
-<!-- <mat-grid-list cols="4" rowHeight="1:3" >
-  <mat-grid-tile colspan="3">
-    <mat-list>
-      <button (click)="onCreateQuestion()" mat-button>
-        <mat-icon matSuffix>add</mat-icon>
-        Ask your question
-      </button>
-      <h1 mat-subheader>Popular Questions</h1>
-      <mat-list-item *ngFor="let question of allQuestions"  >
-        <a matLine>{{question.tag}}</a>
-        <p matLine [routerLink]="['/answers', question._id]">
-          {{question.question}}
-        </p>
-        <button (click)="onUpdateQuestion()" mat-button matTooltip="Edit question">
-          <mat-icon matSuffix>edit</mat-icon>
-        </button>
-        <button (click)="onDeleteQuestion()" mat-button matTooltip="Delete question">
-          <mat-icon matSuffix>clear</mat-icon>
-        </button>
-        <mat-divider></mat-divider>
-      </mat-list-item>
-    </mat-list>
-  </mat-grid-tile>
-
-  <mat-grid-tile>
-    <mat-list>
-      <h1 mat-subheader>Popular tags</h1>
-      <mat-list-item *ngFor="let tag of allTags">
-        <p (click)="filterTag(tag)">{{ tag }}</p>
-      </mat-list-item>
-    </mat-list>
-
-  </mat-grid-tile>
-</mat-grid-list> -->

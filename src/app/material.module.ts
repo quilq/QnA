@@ -10,6 +10,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
     imports:[
@@ -23,6 +24,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
         MatDividerModule,
         MatExpansionModule,
         MatTooltipModule,
+        MatDialogModule,
         BrowserAnimationsModule
     ],
     exports:[
@@ -35,7 +37,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
         MatIconModule,
         MatExpansionModule,
         MatTooltipModule,
-        MatDividerModule
+        MatDividerModule,
+        MatDialogModule
     ]
 })
 

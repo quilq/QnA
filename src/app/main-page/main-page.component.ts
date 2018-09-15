@@ -15,9 +15,9 @@ export class MainPageComponent implements OnInit {
   // // Create some questions:
   // myQuestions: Question[] = [
   //   new Question('HTML', 'HTML Question 1?', 'Admin',
-  //     [{ isCorrectAnswer: true, answeredByUser: 'Admin',answer: 'Answer 1-1 html' },
-  //     { isCorrectAnswer: false, answeredByUser: 'Admin',answer: 'Answer 1-2 html' },
-  //     { isCorrectAnswer: false, answeredByUser: 'Admin',answer: 'Answer 1-3 html' }]),
+  //   [{ isCorrectAnswer: true, answeredByUser: 'Admin',answer: 'Answer 1-1 html' },
+  //   { isCorrectAnswer: false, answeredByUser: 'Admin',answer: 'Answer 1-2 html' },
+  //   { isCorrectAnswer: false, answeredByUser: 'Admin',answer: 'Answer 1-3 html' }]),
   //   new Question('HTML', 'HTML Question 2?','Admin',
   //   [{ isCorrectAnswer: true, answeredByUser: 'Admin',answer: 'Answer 2-1 html' },
   //   { isCorrectAnswer: false, answeredByUser: 'Admin',answer: 'Answer 2-2 html' },
@@ -43,6 +43,8 @@ export class MainPageComponent implements OnInit {
   allQuestions: Question[] = [];
   filterQuestions: Question[] = [];
   allTags: string[] = [];
+  myNewQuestion = '';
+  editable: boolean[] = [];
 
   ngOnInit() {
     // // Create some question:
@@ -58,6 +60,9 @@ export class MainPageComponent implements OnInit {
           this.allTags.push(iterator.tag);
         }
       }
+      for (let i = 0; i < this.allQuestions.length; i++) {
+        this.editable[i] = false;
+      }
     }, (error) => {
       console.log(error);
     });
@@ -68,8 +73,12 @@ export class MainPageComponent implements OnInit {
   }
 
   createQuestion(question: Question) {
-    this.httpService.createQuestion(question).subscribe();
+    this.httpService.createQuestion(question).subscribe((response)=>{
+      question._id = response.toString();
+      this.allQuestions.push(question);
+    });
   }
+
 
   updateQuestion(oldQuestion: Question, newQuestion: string) {
     this.httpService.updateQuestion(oldQuestion, newQuestion).subscribe();
@@ -79,13 +88,30 @@ export class MainPageComponent implements OnInit {
     this.httpService.deleteQuestion(question).subscribe();
   }
 
-  onUpdateQuestion(){
+  onUpdateQuestion(i: number) {
+    this.editable[i] = true;
   }
 
-  onDeleteQuestion(){
+  onCancel(i: number) {
+    this.editable[i] = false;
   }
 
-  onCreateQuestion(){
+  onUpdate(i: number, newQuestion: string) {
+    this.updateQuestion(this.allQuestions[i], newQuestion);
+    this.allQuestions[i].question = newQuestion;
+    this.onCancel(i);
+  }
+
+  onDeleteQuestion(i: number) {
+    this.deleteQuestion(this.allQuestions[i]);
+    this.allQuestions.splice(i, 1);
+  }
+
+  onCreateQuestion(element: HTMLInputElement) {
+    let newQuestion: Question = new Question();
+    newQuestion.question = element.value;
+    this.createQuestion(newQuestion);
+    element.value = '';
   }
 
 }

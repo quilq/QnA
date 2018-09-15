@@ -5,7 +5,7 @@ export class Answer {
     constructor(){
         this.answer = '',
         this.isCorrectAnswer = false,
-        this.answeredByUser = ''
+        this.answeredByUser = 'Admin'
     }
 }
 

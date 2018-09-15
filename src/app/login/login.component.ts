@@ -22,16 +22,16 @@ export class LoginComponent implements OnInit {
 
   hide = true;
 
-  onSubmit(){
+  onSubmit() {
     this.onLogin(this.loginForm.value.email, this.loginForm.value.password);
   }
 
-  onLogin(email, password){
-    let user = {email, password};
-    this.httpServie.login(user).subscribe(response =>{
+  onLogin(email, password) {
+    let user = { email, password };
+    this.httpServie.login(user).subscribe(response => {
       localStorage.setItem('token', response.headers.get('x-auth'));
       this.router.navigate(['/user']);
-    }, (err)=>{
+    }, (err) => {
       console.log(err);
     });
   }

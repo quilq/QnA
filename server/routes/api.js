@@ -5,7 +5,7 @@ const ObjectID = require('mongodb').ObjectID;
 const url = 'mongodb://localhost:27017';
 const { User } = require('./../models/user');
 
-var {authenticate} = require('./../middleware/authenticate');
+var { authenticate } = require('./../middleware/authenticate');
 var db;
 
 MongoClient.connect(url, { useNewUrlParser: true }, (err, client) => {
@@ -18,15 +18,6 @@ MongoClient.connect(url, { useNewUrlParser: true }, (err, client) => {
     db = client.db('mydb');
 });
 
-function insertQuestion(question) {
-    db.collection('qna').insertOne(question, (error, result) => {
-        if (error) {
-            console.log('Cannot insert document');
-        }
-        console.log(JSON.stringify(result.ops, undefined, 2));
-    });
-}
-
 function deleteQuestion(id) {
     db.collection('qna').findOneAndDelete({ _id: new ObjectID(id) }).then((result) => {
         console.log(JSON.stringify(result.value, undefined, 2));
@@ -34,6 +25,7 @@ function deleteQuestion(id) {
 }
 
 function updateQuestion(id, newQuestion) {
+    console.log(id, newQuestion);
     db.collection('qna').findOneAndUpdate({
         //filter
         _id: new ObjectID(id)
@@ -46,31 +38,31 @@ function updateQuestion(id, newQuestion) {
         }, (err, res) => {
             if (err) {
                 console.log(err);
-            } else {
-                console.log(res.value);
             }
         });
 }
 
 function updateAnswer(id, oldAnswer, newAnswer) {
     db.collection('qna').updateOne(
-        { _id: new ObjectID(id), answer: oldAnswer },
-        { $set: { 'answer.$': newAnswer } }
+        { _id: new ObjectID(id) },
+        { $set: { 'answers.$[element].answer': newAnswer.answer } },
+        //Filter answers array to update
+        { arrayFilters: [{ "element.answer": oldAnswer.answer }] }
     )
-    console.log(id, oldAnswer, newAnswer)
 }
 
 function addAnswer(id, answer) {
     db.collection('qna').updateOne(
         { _id: new ObjectID(id) },
-        { $push: { answer: answer } }
+        //Push answer to answers array
+        { $push: { answers: answer } }
     )
 }
 
 function deleteAnswer(id, answer) {
     db.collection('qna').updateOne(
         { _id: new ObjectID(id) },
-        { $pull: { answer: answer } }
+        { $pull: { answers: { answer: answer.answer } } }
     )
 }
 
@@ -82,8 +74,13 @@ function deleteAnswer(id, answer) {
 
 //Create questions
 router.post('/q', (req, res) => {
-    insertQuestion(req.body);
-    res.json(req.body);
+    db.collection('qna').insertOne(req.body, (error, result) => {
+        if (error) {
+            console.log('Cannot insert document');
+        }
+        res.status(200).send(result.ops[0]._id);
+        console.log(result.ops[0]._id)
+    });
 });
 
 //Find questions
@@ -134,7 +131,7 @@ router.put('/a/delete', (req, res) => {
 });
 
 //Get user info (private route)
-router.get('/user/me', authenticate, (req, res)=>{
+router.get('/user/me', authenticate, (req, res) => {
     res.send(req.user);
 })
 

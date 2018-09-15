@@ -11,7 +11,7 @@ export class HttpService {
 
   constructor(private httpClient: HttpClient) { }
 
-  isLoggedin(){
+  isLoggedin() {
     if (localStorage.getItem('token')) {
       return true;
     } else {
@@ -19,7 +19,7 @@ export class HttpService {
     }
   }
 
-  getAllQuestions(){
+  getAllQuestions() {
     return this.httpClient.get('api/q');
   }
 
@@ -39,7 +39,7 @@ export class HttpService {
   updateQuestion(oldQuestion: Question, newQuestion: string) {
     let id = oldQuestion._id;
     let url = 'api/q';
-    return this.httpClient.put(url, [id, newQuestion]);
+    return this.httpClient.put(url, { id, newQuestion });
   }
 
   //Delete question
@@ -53,39 +53,39 @@ export class HttpService {
   addAnswer(question: Question, answer: Answer) {
     let id = question._id;
     let url = `api/a/add`;
-    return this.httpClient.put(url, [id, answer]);
+    return this.httpClient.put(url, { id, answer });
   }
 
   updateAnswer(question: Question, oldAnswer: Answer, newAnswer: Answer) {
     let id = question._id;
     let url = `api/a/update`;
-    return this.httpClient.put(url, [id, oldAnswer, newAnswer]);
+    return this.httpClient.put(url, { id, oldAnswer, newAnswer });
   }
 
   deleteAnswer(question: Question, answer: Answer) {
     let id = question._id;
     let url = `api/a/delete`;
-    return this.httpClient.put(url, [id, answer]);
+    return this.httpClient.put(url, { id, answer });
   }
 
-  login(user){
+  login(user) {
     let url = '/api/user/login';
-    return this.httpClient.post(url, user, {observe: 'response'});    
+    return this.httpClient.post(url, user, { observe: 'response' });
   }
 
-  logout(token: string){
+  logout(token: string) {
     let url = `/api/user/me/token`;
-    return this.httpClient.delete(url, {headers: {'x-auth':token}});
+    return this.httpClient.delete(url, { headers: { 'x-auth': token } });
   }
 
-  getUser(token: string){
+  getUser(token: string) {
     let url = '/api/user/me';
-    return this.httpClient.get(url, {headers: {'x-auth':token}});
+    return this.httpClient.get(url, { headers: { 'x-auth': token } });
   }
 
-  signup(user){
+  signup(user) {
     let url = '/api/user/signup';
-    return this.httpClient.post(url, user, {observe: 'response'})
+    return this.httpClient.post(url, user, { observe: 'response' })
   }
 
 }
