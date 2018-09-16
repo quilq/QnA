@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Question } from '../question';
 import { HttpService } from '../http.service';
+import { QuestionsService } from '../questions.service';
 
 @Component({
   selector: 'app-main-page',
@@ -10,7 +11,7 @@ import { HttpService } from '../http.service';
 
 export class MainPageComponent implements OnInit {
 
-  constructor(private httpService: HttpService) { }
+  constructor(private httpService: HttpService, private questionService: QuestionsService) { }
 
   // // Create some questions:
   // myQuestions: Question[] = [
@@ -41,7 +42,7 @@ export class MainPageComponent implements OnInit {
   // ];
 
   allQuestions: Question[] = [];
-  filterQuestions: Question[] = [];
+  filteredQuestions: Question[] = [];
   allTags: string[] = [];
   myNewQuestion = '';
   editable: boolean[] = [];
@@ -54,7 +55,7 @@ export class MainPageComponent implements OnInit {
 
     this.httpService.getAllQuestions().subscribe((questions: Question[]) => {
       this.allQuestions = questions;
-      this.filterQuestions = questions;
+      this.filteredQuestions = questions;
       for (const iterator of this.allQuestions) {
         if (!this.allTags.includes(iterator.tag)) {
           this.allTags.push(iterator.tag);
@@ -68,8 +69,14 @@ export class MainPageComponent implements OnInit {
     });
   }
 
+  findQuestions(value: string){
+    console.log(value);
+    this.allQuestions = this.filteredQuestions.filter(question => question.question.includes(value));
+    console.log(this.allQuestions);
+  }
+
   filterTag(tag: string) {
-    this.allQuestions = this.filterQuestions.filter(question => question.tag === tag);
+    this.allQuestions = this.filteredQuestions.filter(question => question.tag === tag);
   }
 
   createQuestion(question: Question) {

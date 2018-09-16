@@ -14,10 +14,24 @@ export class UserComponent implements OnInit {
   user: User = new User();
 
   ngOnInit() {
-    console.log('is logged in: ', this.httpService.isLoggedin());
-    console.log('token: ', localStorage.getItem('token'));
+    this.onGetUser(localStorage.getItem('token'));
+    this.onGetUserAnswers();
+    this.onGetUserQuestions();
   }
 
-  onGetUser(token: string){}
+  onGetUser(token: string){
+    this.httpService.getUser(token).subscribe((user: User)=>{
+      this.user.email = user.email;
+      this.user.username = user.username;
+    });
+  }
+
+  onGetUserQuestions(){
+
+  }
+
+  onGetUserAnswers(){
+
+  }
 
 }

@@ -135,9 +135,19 @@ router.get('/user/me', authenticate, (req, res) => {
     res.send(req.user);
 })
 
+//Get user questions
+router.get('/user/me', (req, res)=>{
+
+})
+
+//Get user answers
+router.get('user/me', (req, res)=>{
+
+})
+
 //Sign up route
 router.post('/user/signup', (req, res) => {
-    var body = { email: req.body.email, password: req.body.password };
+    var body = { username: req.body.username, email: req.body.email, password: req.body.password };
     var user = new User(body);
     user.save().then(() => {
         return user.generateAuthToken();

@@ -88,4 +88,11 @@ export class HttpService {
     return this.httpClient.post(url, user, { observe: 'response' })
   }
 
+  getUserQuestions(username: string){
+  }
+
+  getUserAnswers(username: string){
+
+  }
+
 }

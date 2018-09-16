@@ -4,6 +4,12 @@ const bcrypt = require('bcryptjs');
 const { mongoose } = require('./../db/mongoose');
 
 var UserSchema = new mongoose.Schema({
+    username: {
+        type: String,
+        required: true,
+        minlength: 1,
+        unique: true
+    },
     email: {
         type: String,
         required: true,
@@ -19,17 +25,18 @@ var UserSchema = new mongoose.Schema({
         type: String,
         require: true,
         minlength: 6
-    },
-    tokens: [{
-        access: {
-            type: String,
-            required: true
-        },
-        token: {
-            type: String,
-            required: true
-        }
-    }]
+    }
+    // ,
+    // tokens: [{
+    //     access: {
+    //         type: String,
+    //         required: true
+    //     },
+    //     token: {
+    //         type: String,
+    //         required: true
+    //     }
+    // }]
 });
 
 //Hash password before saving
@@ -126,7 +133,7 @@ UserSchema.methods.toJSON = function(){
 
     //Convert mongo object to regular object
     var userObject = user.toObject();
-    return {_id: userObject._id, email: userObject.email}
+    return {_id: userObject._id, email: userObject.email, username: userObject.username}
 }
 
 var User = mongoose.model('User', UserSchema);

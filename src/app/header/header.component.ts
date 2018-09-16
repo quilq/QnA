@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpService } from '../http.service';
 import { Router } from '@angular/router';
+import { MainPageComponent } from '../main-page/main-page.component';
+import { Question } from '../question';
+import { QuestionsService } from '../questions.service';
 
 @Component({
   selector: 'app-header',
@@ -9,7 +12,8 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private httpService: HttpService, private router: Router) { }
+  constructor(private httpService: HttpService, 
+    private router: Router) { }
 
   isLoggedin;
 
@@ -19,18 +23,14 @@ export class HeaderComponent implements OnInit {
 
   onLogout(){
     if (this.httpService.isLoggedin()) {
-      console.log('123');
       this.logout(localStorage.getItem('token'));
-      console.log('789');
     }
   }
 
   logout(token: string){
     this.httpService.logout(token).subscribe(()=>{
-      console.log('456');
       localStorage.removeItem('token');
       this.router.navigate(['/user']);
-      console.log('000');
     }, (err)=>{
       console.log(err);
     })

@@ -18,16 +18,17 @@ export class SignupComponent implements OnInit {
   hide = true;
 
   signupForm = new FormGroup({
+    username: new FormControl(''),
     email: new FormControl(''),
     password: new FormControl('')
   })
 
   onSubmit(){
-    this.onSignup(this.signupForm.value.email, this.signupForm.value.password);
+    this.onSignup(this.signupForm.value.username, this.signupForm.value.email, this.signupForm.value.password);
   }
 
-  onSignup(email, password){
-    let user = {email, password};
+  onSignup(username, email, password){
+    let user = {username, email, password};
     this.httpServie.signup(user).subscribe(response =>{
       localStorage.setItem('token', response.headers.get('x-auth'));
       this.router.navigate(['/user']);
