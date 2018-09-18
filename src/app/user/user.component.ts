@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from './user';
+import { UserService, User } from '../user.service';
 import { HttpService } from '../http.service';
 
 @Component({
@@ -9,29 +9,19 @@ import { HttpService } from '../http.service';
 })
 export class UserComponent implements OnInit {
 
-  constructor(private httpService: HttpService) { }
+  constructor(private httpService: HttpService,
+  private userService: UserService) { }
 
-  user: User = new User();
+  user: User = this.userService.user;
 
-  ngOnInit() {
-    this.onGetUser(localStorage.getItem('token'));
-    this.onGetUserAnswers();
-    this.onGetUserQuestions();
-  }
+  didLogout = false;
 
-  onGetUser(token: string){
-    this.httpService.getUser(token).subscribe((user: User)=>{
-      this.user.email = user.email;
-      this.user.username = user.username;
-    });
-  }
-
-  onGetUserQuestions(){
-
-  }
-
-  onGetUserAnswers(){
-
+  ngOnInit() { 
+    if (this.httpService.isLoggedin()){
+      this.userService.onGetUser();
+    } else {
+      this.didLogout = true;
+    }
   }
 
 }

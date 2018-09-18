@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Question, Answer } from '../../question';
 import { HttpService } from '../../http.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { UserService } from '../../user.service';
 
 @Component({
   selector: 'app-answers',
@@ -13,11 +14,14 @@ export class AnswersComponent implements OnInit {
 
   constructor(
     private httpService: HttpService,
-    private route: ActivatedRoute
+    private userService: UserService,
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   currentAnswer: Answer;
   open = false;
+
   setOpen() {
     this.open = true;
   }
@@ -42,8 +46,16 @@ export class AnswersComponent implements OnInit {
   findRelatedQuestions() {
   }
 
+  canEdit() {
+    return this.httpService.isLoggedin();
+  }
+
   addAnswer(question: Question, answer: Answer) {
-    this.httpService.addAnswer(question, answer).subscribe();
+    if (this.canEdit()) {
+      this.httpService.addAnswer(question, answer).subscribe();
+    } else {
+      this.router.navigate(['/login']);
+    }
   }
 
   updateAnswer(question: Question, oldAnswer: Answer, newAnswer: Answer) {
@@ -65,6 +77,7 @@ export class AnswersComponent implements OnInit {
     if (canAddAnswer) {
       let newAnswer = new Answer();
       newAnswer.answer = answer;
+      newAnswer.answeredByUser = this.userService.user.username;
       this.addAnswer(this.question, newAnswer);
       this.answers.push(newAnswer);
       this.duplicateAnswer = false;
@@ -72,7 +85,6 @@ export class AnswersComponent implements OnInit {
     } else {
       this.duplicateAnswer = true;
     }
-
   }
 
   onUpdateAnswer(i: number) {
@@ -84,20 +96,28 @@ export class AnswersComponent implements OnInit {
   }
 
   onUpdate(i: number, answer: string) {
-    let newAnswer = new Answer();
-    newAnswer.answeredByUser = this.answers[i].answeredByUser;
-    newAnswer.isCorrectAnswer = this.answers[i].isCorrectAnswer;
-    newAnswer.answer = answer;
+    if (this.userService.user.username === this.answers[i].answeredByUser) {
 
-    this.updateAnswer(this.question, this.answers[i], newAnswer);
-    this.answers[i].answer = answer;
-    this.onCancel(i);
+      let newAnswer = new Answer();
+      newAnswer.answeredByUser = this.answers[i].answeredByUser;
+      newAnswer.isCorrectAnswer = this.answers[i].isCorrectAnswer;
+      newAnswer.answer = answer;
+
+      this.updateAnswer(this.question, this.answers[i], newAnswer);
+      this.answers[i].answer = answer;
+      this.onCancel(i);
+    } else {
+      alert('You cannot update other users\' answers !');
+    }
   }
 
   onDeleteAnswer(i: number) {
-    this.deleteAnswer(this.question, this.answers[i]);
-    this.answers.splice(i, 1);
+    if (this.userService.user.username === this.answers[i].answeredByUser) {
+      this.deleteAnswer(this.question, this.answers[i]);
+      this.answers.splice(i, 1);
+    } else {
+      alert('You cannot delete other users\' answers !');
+    }
   }
-
 
 }

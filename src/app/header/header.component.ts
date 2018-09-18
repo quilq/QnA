@@ -1,9 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../http.service';
 import { Router } from '@angular/router';
-import { MainPageComponent } from '../main-page/main-page.component';
-import { Question } from '../question';
-import { QuestionsService } from '../questions.service';
 
 @Component({
   selector: 'app-header',

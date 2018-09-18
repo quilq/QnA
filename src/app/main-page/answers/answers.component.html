@@ -1,5 +1,5 @@
 <app-header></app-header>
-<div fxLayout="row" fxLayoutAlign="space-between start" class="container">
+<div fxLayout.gt-sm="row" fxLayout.lt-md="column" fxLayoutAlign="space-between start" class="container">
     <div class="left" fxFlex="70">
         <h1>{{question.question}}</h1>
         <p>tag: {{question.tag}}</p>
@@ -16,7 +16,7 @@
 
             <div fxLayout="row" fxLayoutAlign="space-between none">
                 <p>{{answers[i].answer}}</p>
-                <div fxLayout="row">
+                <div fxLayout="row" *ngIf="canEdit()">
                     <p (click)="onUpdateAnswer(i)" mat-button matTooltip="Edit answer">
                         <mat-icon class="small-icon" matSuffix>edit</mat-icon>
                     </p>

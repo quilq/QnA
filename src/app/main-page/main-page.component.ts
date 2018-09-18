@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Question } from '../question';
 import { HttpService } from '../http.service';
 import { QuestionsService } from '../questions.service';
+import { Router } from '@angular/router';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-main-page',
@@ -11,7 +13,9 @@ import { QuestionsService } from '../questions.service';
 
 export class MainPageComponent implements OnInit {
 
-  constructor(private httpService: HttpService, private questionService: QuestionsService) { }
+  constructor(private httpService: HttpService,
+    private userService: UserService,
+    private router: Router) { }
 
   // // Create some questions:
   // myQuestions: Question[] = [
@@ -52,6 +56,9 @@ export class MainPageComponent implements OnInit {
     // for (const iterator of this.myQuestions) {
     //   this.createQuestion(iterator);
     // }
+    if (this.httpService.isLoggedin()) {
+      this.userService.onGetUser();
+    }
 
     this.httpService.getAllQuestions().subscribe((questions: Question[]) => {
       this.allQuestions = questions;
@@ -69,7 +76,11 @@ export class MainPageComponent implements OnInit {
     });
   }
 
-  findQuestions(value: string){
+  canEdit() {
+    return this.httpService.isLoggedin();
+  }
+
+  findQuestions(value: string) {
     console.log(value);
     this.allQuestions = this.filteredQuestions.filter(question => question.question.includes(value));
     console.log(this.allQuestions);
@@ -80,12 +91,15 @@ export class MainPageComponent implements OnInit {
   }
 
   createQuestion(question: Question) {
-    this.httpService.createQuestion(question).subscribe((response)=>{
-      question._id = response.toString();
-      this.allQuestions.push(question);
-    });
+    if (this.canEdit()) {
+      this.httpService.createQuestion(question).subscribe((response) => {
+        question._id = response.toString();
+        this.allQuestions.push(question);
+      });
+    } else {
+      this.router.navigate(['/login']);
+    }
   }
-
 
   updateQuestion(oldQuestion: Question, newQuestion: string) {
     this.httpService.updateQuestion(oldQuestion, newQuestion).subscribe();
@@ -104,19 +118,29 @@ export class MainPageComponent implements OnInit {
   }
 
   onUpdate(i: number, newQuestion: string) {
-    this.updateQuestion(this.allQuestions[i], newQuestion);
-    this.allQuestions[i].question = newQuestion;
-    this.onCancel(i);
+    if (this.userService.user.username === this.allQuestions[i].askedByUser) {
+      this.updateQuestion(this.allQuestions[i], newQuestion);
+      this.allQuestions[i].question = newQuestion;
+      this.onCancel(i);
+    } else {
+      alert('You cannot update other users\' questions !');
+    }
   }
 
   onDeleteQuestion(i: number) {
-    this.deleteQuestion(this.allQuestions[i]);
-    this.allQuestions.splice(i, 1);
+    if (this.userService.user.username === this.allQuestions[i].askedByUser) {
+      this.deleteQuestion(this.allQuestions[i]);
+      this.allQuestions.splice(i, 1);
+
+    } else {
+      alert('You cannot delete other users\' questions !');
+    }
   }
 
   onCreateQuestion(element: HTMLInputElement) {
     let newQuestion: Question = new Question();
     newQuestion.question = element.value;
+    newQuestion.askedByUser = this.userService.user.username;
     this.createQuestion(newQuestion);
     element.value = '';
   }

@@ -1,4 +1,4 @@
-<div class="container" fxLayout="row" fxLayoutAlign="space-between none">
+<div class="container" fxLayout.gt-md="row" fxLayout.lt-lg="column" fxLayoutAlign="space-between none" >
   <div class="left" fxFlex="70">
     <div fxLayout="row" fxLayoutAlign="space-between start" >
       <h1>Recent Questions</h1>
@@ -24,7 +24,7 @@
             {{question.askedByUser}}
           </p>
         </div>
-        <span fxLayout="row">
+        <span fxLayout="row" *ngIf="canEdit()">
           <p (click)="onUpdateQuestion(i)" matTooltip="Edit question">
             <mat-icon class="small-icon" matSuffix>edit</mat-icon>
           </p>

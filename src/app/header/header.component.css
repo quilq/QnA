@@ -1,11 +1,12 @@
-.fill-space{
-    flex: 1 1 auto;
-}
-
 mat-form-field{
     font-size: .75em;
 }
 
-mat-toolbar{
-    background-color: lightgreen;
+mat-toolbar {
+    background-color: #33b5e5;
+
+}
+
+.white-font{
+    color: #ffffff;
 }

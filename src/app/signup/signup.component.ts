@@ -23,16 +23,16 @@ export class SignupComponent implements OnInit {
     password: new FormControl('')
   })
 
-  onSubmit(){
+  onSubmit() {
     this.onSignup(this.signupForm.value.username, this.signupForm.value.email, this.signupForm.value.password);
   }
 
-  onSignup(username, email, password){
-    let user = {username, email, password};
-    this.httpServie.signup(user).subscribe(response =>{
+  onSignup(username, email, password) {
+    let user = { username, email, password };
+    this.httpServie.signup(user).subscribe(response => {
       localStorage.setItem('token', response.headers.get('x-auth'));
       this.router.navigate(['/user']);
-    }, (err)=>{
+    }, (err) => {
       console.log(err);
     });
   }

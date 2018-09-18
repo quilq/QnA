@@ -11,6 +11,7 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatMenuModule} from '@angular/material/menu';
 
 @NgModule({
     imports:[
@@ -25,6 +26,7 @@ import {MatDialogModule} from '@angular/material/dialog';
         MatExpansionModule,
         MatTooltipModule,
         MatDialogModule,
+        MatMenuModule,
         BrowserAnimationsModule
     ],
     exports:[
@@ -38,6 +40,7 @@ import {MatDialogModule} from '@angular/material/dialog';
         MatExpansionModule,
         MatTooltipModule,
         MatDividerModule,
+        MatMenuModule,
         MatDialogModule
     ]
 })

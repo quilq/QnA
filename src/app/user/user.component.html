@@ -1,8 +1,14 @@
-<p>
-  Welcome to user page
-</p>
+<div *ngIf="!didLogout">
+  <p>
+    Welcome to user page
+  </p>
 
-<p>{{user.username}}</p>
-<p>{{user.email}}</p>
+  <p>{{user.username}}</p>
+  <p>{{user.email}}</p>
 
-<button routerLink="/">Go back to main page</button>
+  <button routerLink="/">Go back to main page</button>
+</div>
+
+<div *ngIf="didLogout">
+  Welcome !
+</div>
