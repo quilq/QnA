@@ -15,3 +15,7 @@ p:hover{
 .small-icon { 
     font-size: 18px; 
 }
+
+textarea{
+    width: 100%;
+}

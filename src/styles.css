@@ -5,3 +5,6 @@
     margin: 0;
 }
 
+.no-hover-effect.mat-button .mat-button-focus-overlay {
+    background-color: transparent;
+}

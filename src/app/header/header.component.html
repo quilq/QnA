@@ -1,8 +1,6 @@
 <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center">
-  <a routerLink='' mat-button color="primary">
-    <h1 class="white-font">
+  <a routerLink='' mat-button color="primary" class="white-font no-hover-effect title">
       QnA
-    </h1>
   </a>
 
   <div *ngIf="!isLoggedin">
@@ -24,34 +22,3 @@
 
   </div>
 </mat-toolbar>
-
-<!-- <div fxHide.gt-xs class="mobile-nav">
-  <a routerLink='' mat-button color="primary">
-    <h1 class="white-font">
-      QnA
-    </h1>
-  </a>
-  <button mat-button [matMenuTriggerFor]="menu" class="white-font">
-    <mat-icon matSuffix>menu</mat-icon >
-  </button>
-  <mat-menu #menu="matMenu">
-    <div *ngIf="!isLoggedin">
-      <a routerLink='/login' mat-stroked-button color="primary" class="white-font">
-        Log in
-      </a>
-      <a routerLink='/signup' mat-stroked-button color="primary" class="white-font">
-        Sign up
-      </a>
-
-    </div>
-    <div *ngIf="isLoggedin">
-      <a routerLink='/user' mat-stroked-button color="primary" class="white-font">
-        User
-      </a>
-      <button (click)="onLogout()" mat-stroked-button color="primary" class="white-font">
-        Log out
-      </button>
-
-    </div>
-  </mat-menu>
-</div> -->

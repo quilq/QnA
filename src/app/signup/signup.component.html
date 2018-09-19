@@ -1,24 +1,26 @@
-<form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
-    <a routerLink='' mat-button>
-        <h1>
-            QnA
-        </h1>
-    </a>
-    <mat-form-field>
-        <input matInput placeholder="Username" type="text" formControlName="username">
-        <mat-icon matSuffix>person</mat-icon>
-    </mat-form-field>
+<div fxLayout="column" fxLayoutAlign="center center" class="full-page">
+    <mat-card class="box">
+        <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" fxLayout="column" fxLayoutAlign="center center">
+            <a routerLink='' mat-button class="no-hover-effect title" fxFill>
+                QnA
+            </a>
+            <mat-form-field>
+                <input matInput placeholder="Username" type="text" formControlName="username">
+                <mat-icon matSuffix>person</mat-icon>
+            </mat-form-field>
 
-    <mat-form-field>
-        <input matInput placeholder="Email" type="email" formControlName="email">
-        <mat-icon matSuffix>mail</mat-icon>
-    </mat-form-field>
-    <mat-form-field>
-        <input matInput placeholder="Password" [type]="hide ? 'password' : 'text'" formControlName="password">
-        <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
-    </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="Email" type="email" formControlName="email">
+                <mat-icon matSuffix>mail</mat-icon>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="Password" [type]="hide ? 'password' : 'text'" formControlName="password">
+                <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+            </mat-form-field>
 
-    <button mat-raised-button color="primary" type="submit">Sign up</button>
+            <button mat-raised-button class="blue-hover" type="submit">Sign up</button>
 
-    <a routerLink="/login" mat-button>Log in instead</a>
-</form>
+            <a routerLink="/login" mat-button class="no-hover-effect blue-text">Log in instead</a>
+        </form>
+    </mat-card>
+</div>

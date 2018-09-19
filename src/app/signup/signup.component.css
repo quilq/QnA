@@ -1,15 +1,29 @@
-form {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: lightblue;
-    border: 1px solid black;
-    margin: 6% 25% 6% 25%;
-    padding: 5%;
-    border-radius: 5px;
+.full-page{
+    height: 100vh;
 }
 
-button{
-    margin: 3%;
+.box{
+    padding: 4% 8%;
+}
+
+.blue-hover:hover{
+    background-color: lightskyblue;
+}
+
+mat-form-field{
+    margin-top: 2%;
+}
+
+button {
+    margin-top: 16%;
+}
+
+.title{
+    font-size: 2.5em;
+    margin-bottom: 8%;
+    color: lightseagreen;
+}
+
+.blue-text:hover{
+    color: lightseagreen;
 }
