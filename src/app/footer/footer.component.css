@@ -1,12 +1,12 @@
-div{
-    display: flex;
-    justify-content: space-around;
-    background-color: lightskyblue;
+mat-list {
+    background-color: #33b5e5;
 }
 
-mat-list{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
+mat-list-item {
+    color: #ffffff !important;
+    font-size: .8em !important;
+}
+
+.small-icon { 
+    font-size: 18px; 
 }

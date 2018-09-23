@@ -1,14 +1,40 @@
-<div *ngIf="!didLogout">
-  <p>
-    Welcome to user page
-  </p>
-
-  <p>{{user.username}}</p>
-  <p>{{user.email}}</p>
-
-  <button routerLink="/">Go back to main page</button>
+<app-header></app-header>
+<div class="container">  
+  <div *ngIf="!didLogout">
+    <mat-card>
+      <mat-card-header>Welcome {{user.username}}</mat-card-header>
+      <mat-card-content>
+        <mat-list>
+            <mat-list-item> Your email: {{user.email}} </mat-list-item> 
+            <mat-list-item> Your password: ******** </mat-list-item>
+        </mat-list>
+      </mat-card-content>
+    </mat-card>
+    
+    <mat-tab-group mat-stretch-tabs>
+        <mat-tab label="Your questions">
+          <mat-list>
+            <mat-list-item *ngFor="let question of userQuestions">
+              <p mat-line [routerLink]="['/answers', question._id]" class="hover">{{question.question}}</p>
+              <p mat-line><mat-icon class="small-icon">folder</mat-icon> {{question.tag}}</p>
+              <mat-divider></mat-divider>
+            </mat-list-item>
+          </mat-list>
+        </mat-tab>
+        <mat-tab label="You have answered">
+          <mat-list>
+            <mat-list-item *ngFor="let question of userAnswers">
+              <p mat-line [routerLink]="['/answers', question._id]" class="hover">{{question.question}}</p>
+              <p mat-line><mat-icon class="small-icon">folder</mat-icon> {{question.tag}}</p>
+              <mat-divider></mat-divider>
+            </mat-list-item>
+          </mat-list>
+        </mat-tab>
+      </mat-tab-group>
+  </div>
+  
+  <div *ngIf="didLogout">
+    You have signed out successfully !
+  </div>
 </div>
-
-<div *ngIf="didLogout">
-  Welcome !
-</div>
+<app-footer></app-footer>

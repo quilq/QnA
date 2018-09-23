@@ -13,6 +13,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatCardModule} from '@angular/material/card';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatBadgeModule} from '@angular/material/badge';
 
 @NgModule({
     imports:[
@@ -29,6 +31,8 @@ import {MatCardModule} from '@angular/material/card';
         MatDialogModule,
         MatMenuModule,
         MatCardModule,
+        MatTabsModule,
+        MatBadgeModule,
         BrowserAnimationsModule
     ],
     exports:[
@@ -44,6 +48,8 @@ import {MatCardModule} from '@angular/material/card';
         MatDividerModule,
         MatMenuModule,
         MatCardModule,
+        MatTabsModule,
+        MatBadgeModule,
         MatDialogModule
     ]
 })

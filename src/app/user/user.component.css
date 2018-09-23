@@ -1,0 +1,21 @@
+.container{
+    margin: 2%;
+    min-height: 100vh;
+}
+
+.white-font{
+    color: #ffffff;
+}
+
+.title{
+    font-size: 3em;
+    color: blue;
+}
+
+.small-icon { 
+    font-size: 18px; 
+}
+
+.hover:hover{
+    cursor: pointer;
+}

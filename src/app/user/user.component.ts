@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService, User } from '../user.service';
 import { HttpService } from '../http.service';
+import { Question } from '../question';
 
 @Component({
   selector: 'app-user',
@@ -12,9 +13,11 @@ export class UserComponent implements OnInit {
   constructor(private httpService: HttpService,
   private userService: UserService) { }
 
-  user: User = this.userService.user;
-
   didLogout = false;
+
+  user: User = new User();
+  userQuestions: Question[] = [new Question()];
+  userAnswers: Question[] = [new Question()];
 
   ngOnInit() { 
     if (this.httpService.isLoggedin()){
@@ -22,6 +25,12 @@ export class UserComponent implements OnInit {
     } else {
       this.didLogout = true;
     }
+    this.userService.info.subscribe(info =>{
+      this.user = info.user;
+      this.userQuestions = info.userQuestions;
+      this.userAnswers = info.userAnswers;
+    })
+
   }
 
 }

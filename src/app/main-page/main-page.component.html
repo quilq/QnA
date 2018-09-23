@@ -1,8 +1,8 @@
-<div class="container" fxLayout.gt-md="row" fxLayout.lt-lg="column" fxLayoutAlign="space-between none" >
+<div class="full-page" fxLayout.gt-md="row" fxLayout.lt-lg="column" fxLayoutAlign="space-between none">
   <div class="left" fxFlex="70">
-    <div fxLayout="row" fxLayoutAlign="space-between start" >
+    <div fxLayout="row" fxLayoutAlign="space-between start">
       <h1>Recent Questions</h1>
-      <div  fxFlexAlign="start">
+      <div fxFlexAlign="start">
         <mat-form-field floatLabel="never">
           <input matInput type="search" matInput placeholder="Ask your question" appearance="legacy" autocomplete="off"
             #newQuestion>
@@ -15,14 +15,21 @@
     <div *ngFor="let question of allQuestions; let i = index" class="all-questions">
       <div fxLayout="row" fxLayoutAlign="space-between none">
         <div>
-          <p matLine [routerLink]="['/answers', question._id]">
+
+          <p [routerLink]="['/answers', question._id]">
             {{question.question}}
           </p>
-          <p>tag: {{question.tag}}</p>
+          <button mat-stroked-button color="primary">
+            Answers: {{question.answers.length}}
+          </button>
+          <p>
+            <mat-icon class="small-icon">folder</mat-icon> {{question.tag}}
+          </p>
           <p>
             <mat-icon class="small-icon" matSuffix>person</mat-icon>
             {{question.askedByUser}}
           </p>
+
         </div>
         <span fxLayout="row" *ngIf="canEdit()">
           <p (click)="onUpdateQuestion(i)" matTooltip="Edit question">
@@ -47,8 +54,7 @@
   </div>
 
   <div class="right" fxFlex="30">
-    
-  <div>
+    <div>
       <mat-form-field floatLabel="never">
         <input matInput type="search" matInput placeholder="Search" appearance="legacy" #search>
       </mat-form-field>

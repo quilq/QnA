@@ -103,7 +103,7 @@ UserSchema.statics.findByToken = function(token){
     //     }
     //     return Promise.resolve();
     // })
-
+    
     try{
         decoded = jwt.verify(token, process.env.JWT_SECRET);
 

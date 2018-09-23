@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from './http.service';
+import { Question, Answer } from './question';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,37 +10,28 @@ export class UserService {
 
   constructor(private httpService: HttpService) { }
 
+  info: Subject<any> = new Subject();
+
   user: User = new User();
 
-  onGetUser(){
-    this.httpService.getUser(localStorage.getItem('token')).subscribe((user: User)=>{
-      this.user.email = user.email;
-      this.user.username = user.username;
-    });
+  onGetUser() {
+    this.httpService.getUser(localStorage.getItem('token')).subscribe((info: any) => {
+      this.user = info.user;
+      this.info.next(info);
+    })
   }
-
-  onGetUserQuestions(){
-
-  }
-
-  onGetUserAnswers(){
-
-  }
-
 }
 
 export class User {
   username: string;
   email: string;
-  password: string;
-  answer: string[];
-  question: string[];
-  
-  constructor() { 
+  answers: string[];
+  questions: string[];
+
+  constructor() {
     this.username = '';
     this.email = '';
-    this.password = '';
-    this.answer = [];
-    this.question = [];
+    this.answers = [];
+    this.questions = [];
   }
 }

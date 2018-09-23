@@ -132,16 +132,24 @@ router.put('/a/delete', (req, res) => {
 
 //Get user info (private route)
 router.get('/user/me', authenticate, (req, res) => {
-    res.send(req.user);
-})
+    let user = req.user;
+    let userQuestions;
+    let userAnswers;
 
-//Get user questions
-router.get('/user/me', (req, res)=>{
-
-})
-
-//Get user answers
-router.get('user/me', (req, res)=>{
+    db.collection('qna').find({ askedByUser: user.username }).toArray().then(docs => {
+        userQuestions = docs;
+        db.collection('qna').find(
+            {
+                answers: {
+                    $elemMatch: {
+                        answeredByUser: user.username
+                    }
+                }
+            }).toArray().then(docs => {
+                userAnswers = docs;
+                res.json({user, userQuestions, userAnswers });
+            });
+    });
 
 })
 

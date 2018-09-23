@@ -27,7 +27,7 @@ export class HeaderComponent implements OnInit {
   logout(token: string){
     this.httpService.logout(token).subscribe(()=>{
       localStorage.removeItem('token');
-      this.router.navigate(['/user']);
+      this.router.navigate(['/']);
     }, (err)=>{
       console.log(err);
     })

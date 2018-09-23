@@ -1,3 +1,7 @@
+.full-page{
+    min-height: 100vh;
+}
+
 p:hover{
     color: blue;
     cursor: pointer;
