@@ -1,16 +1,40 @@
 <div class="full-page" fxLayout.gt-md="row" fxLayout.lt-lg="column" fxLayoutAlign="space-between none">
   <div class="left" fxFlex="70">
-    <div fxLayout="row" fxLayoutAlign="space-between start">
+    <mat-expansion-panel hideToggle [expanded]="open" (opened)="setOpen()">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <mat-icon matSuffix>add</mat-icon> Ask your question
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div fxLayout="column">
+        <mat-form-field appearance="outline">
+          <textarea matInput placeholder="Your question" rows="3" #newQuestion autocomplete="off"></textarea>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <input matInput matInput placeholder="tag" appearance="legacy" autocomplete="off" #tag>
+        </mat-form-field>
+      </div>
+      <mat-action-row>
+        <button mat-raised-button (click)="onCreateQuestion(newQuestion, tag)">Ok</button>
+      </mat-action-row>
+    </mat-expansion-panel>
+
+    <div fxLayout="column" fxLayoutAlign="space-between start">
       <h1>Recent Questions</h1>
-      <div fxFlexAlign="start">
+
+
+      <!-- <div fxFlexAlign="start">
         <mat-form-field floatLabel="never">
-          <input matInput type="search" matInput placeholder="Ask your question" appearance="legacy" autocomplete="off"
+          <input matInput type="search" 
+          matInput placeholder="Ask your question" 
+          appearance="legacy" autocomplete="off"
             #newQuestion>
         </mat-form-field>
         <a mat-button (click)="onCreateQuestion(newQuestion)">
           <mat-icon matSuffix>add</mat-icon>
         </a>
-      </div>
+      </div> -->
+
     </div>
     <div *ngFor="let question of allQuestions; let i = index" class="all-questions">
       <div fxLayout="row" fxLayoutAlign="space-between none">
@@ -19,8 +43,8 @@
           <p [routerLink]="['/answers', question._id]">
             {{question.question}}
           </p>
-          <button mat-stroked-button color="primary">
-            Answers: {{question.answers.length}}
+          <button mat-stroked-button color="primary" [routerLink]="['/answers', question._id]">
+            {{question.answers.length}} answers
           </button>
           <p>
             <mat-icon class="small-icon">folder</mat-icon> {{question.tag}}
@@ -56,7 +80,7 @@
   <div class="right" fxFlex="30">
     <div>
       <mat-form-field floatLabel="never">
-        <input matInput type="search" matInput placeholder="Search" appearance="legacy" #search>
+        <input matInput type="search" placeholder="Search" #search>
       </mat-form-field>
       <a mat-button>
         <mat-icon (click)="findQuestions(search.value)">search</mat-icon>

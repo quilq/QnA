@@ -10,7 +10,7 @@ const app = express();
 const server = http.createServer(app);
 
 //Output folder
-const publicPath = path.join(__dirname, './../dist/QnA');
+const publicPath = path.join(__dirname, './../dist/');
 app.use(express.static(publicPath));
 
 //Parser
@@ -23,7 +23,7 @@ app.use('/api', api);
 
 //Send all other routes (always define last):
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, './../dist/QnA/index.html'));
+    res.sendFile(path.join(__dirname, './../dist/index.html'));
 })
 
 server.listen(port, () => {

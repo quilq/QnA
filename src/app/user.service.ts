@@ -12,11 +12,8 @@ export class UserService {
 
   info: Subject<any> = new Subject();
 
-  user: User = new User();
-
   onGetUser() {
     this.httpService.getUser(localStorage.getItem('token')).subscribe((info: any) => {
-      this.user = info.user;
       this.info.next(info);
     })
   }

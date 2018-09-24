@@ -12,7 +12,7 @@ export class UserComponent implements OnInit {
 
   constructor(private httpService: HttpService,
   private userService: UserService) { }
-
+  
   didLogout = false;
 
   user: User = new User();

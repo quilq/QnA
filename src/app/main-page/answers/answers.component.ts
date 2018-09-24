@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Question, Answer } from '../../question';
 import { HttpService } from '../../http.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UserService } from '../../user.service';
+import { UserService, User } from '../../user.service';
 
 @Component({
   selector: 'app-answers',
@@ -21,7 +21,8 @@ export class AnswersComponent implements OnInit {
 
   currentAnswer: Answer;
   open = false;
-
+  user: User = new User();
+  
   setOpen() {
     this.open = true;
   }
@@ -41,6 +42,10 @@ export class AnswersComponent implements OnInit {
         this.editable[i] = false;
       }
     });
+    this.userService.onGetUser();
+    this.userService.info.subscribe(info => {
+      this.user = info.user;
+    })
   }
 
   findRelatedQuestions() {
@@ -77,7 +82,7 @@ export class AnswersComponent implements OnInit {
     if (canAddAnswer) {
       let newAnswer = new Answer();
       newAnswer.answer = answer;
-      newAnswer.answeredByUser = this.userService.user.username;
+      newAnswer.answeredByUser = this.user.username;
       this.addAnswer(this.question, newAnswer);
       this.answers.push(newAnswer);
       this.duplicateAnswer = false;
@@ -96,7 +101,7 @@ export class AnswersComponent implements OnInit {
   }
 
   onUpdate(i: number, answer: string) {
-    if (this.userService.user.username === this.answers[i].answeredByUser) {
+    if (this.user.username === this.answers[i].answeredByUser) {
 
       let newAnswer = new Answer();
       newAnswer.answeredByUser = this.answers[i].answeredByUser;
@@ -112,7 +117,7 @@ export class AnswersComponent implements OnInit {
   }
 
   onDeleteAnswer(i: number) {
-    if (this.userService.user.username === this.answers[i].answeredByUser) {
+    if (this.user.username === this.answers[i].answeredByUser) {
       this.deleteAnswer(this.question, this.answers[i]);
       this.answers.splice(i, 1);
     } else {

@@ -52,7 +52,7 @@
                     <mat-icon matSuffix>add</mat-icon> Add your answer
                 </mat-panel-title>
             </mat-expansion-panel-header>
-            <mat-form-field>
+            <mat-form-field appearance="outline">
                 <textarea matInput placeholder="Your answer" rows="5" #myAnswer></textarea>
                 <div *ngIf="duplicateAnswer">The answer already exists ! </div>
             </mat-form-field>

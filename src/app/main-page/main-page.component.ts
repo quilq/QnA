@@ -3,7 +3,7 @@ import { Question } from '../question';
 import { HttpService } from '../http.service';
 import { QuestionsService } from '../questions.service';
 import { Router } from '@angular/router';
-import { UserService } from '../user.service';
+import { UserService, User } from '../user.service';
 
 @Component({
   selector: 'app-main-page',
@@ -50,6 +50,13 @@ export class MainPageComponent implements OnInit {
   allTags: string[] = [];
   myNewQuestion = '';
   editable: boolean[] = [];
+  user: User = new User();
+
+  open = false;
+
+  setOpen() {
+    this.open = true;
+  }
 
   ngOnInit() {
     // // Create some question:
@@ -59,6 +66,10 @@ export class MainPageComponent implements OnInit {
     if (this.httpService.isLoggedin()) {
       this.userService.onGetUser();
     }
+
+    this.userService.info.subscribe(info => {
+      this.user = info.user;
+    })
 
     this.httpService.getAllQuestions().subscribe((questions: Question[]) => {
       this.allQuestions = questions;
@@ -96,6 +107,7 @@ export class MainPageComponent implements OnInit {
         question._id = response.toString();
         this.allQuestions.push(question);
       });
+      this.open = false;
     } else {
       this.router.navigate(['/login']);
     }
@@ -118,7 +130,7 @@ export class MainPageComponent implements OnInit {
   }
 
   onUpdate(i: number, newQuestion: string) {
-    if (this.userService.user.username === this.allQuestions[i].askedByUser) {
+    if (this.user.username === this.allQuestions[i].askedByUser) {
       this.updateQuestion(this.allQuestions[i], newQuestion);
       this.allQuestions[i].question = newQuestion;
       this.onCancel(i);
@@ -128,7 +140,7 @@ export class MainPageComponent implements OnInit {
   }
 
   onDeleteQuestion(i: number) {
-    if (this.userService.user.username === this.allQuestions[i].askedByUser) {
+    if (this.user.username === this.allQuestions[i].askedByUser) {
       this.deleteQuestion(this.allQuestions[i]);
       this.allQuestions.splice(i, 1);
 
@@ -137,12 +149,14 @@ export class MainPageComponent implements OnInit {
     }
   }
 
-  onCreateQuestion(element: HTMLInputElement) {
+  onCreateQuestion(questionElement: HTMLInputElement, tagElement: HTMLInputElement) {
     let newQuestion: Question = new Question();
-    newQuestion.question = element.value;
-    newQuestion.askedByUser = this.userService.user.username;
+    newQuestion.question = questionElement.value;
+    newQuestion.askedByUser = this.user.username;
+    newQuestion.tag = tagElement.value;
     this.createQuestion(newQuestion);
-    element.value = '';
+    questionElement.value = '';
+    tagElement.value = '';
   }
 
 }

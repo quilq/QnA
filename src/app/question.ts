@@ -5,7 +5,7 @@ export class Answer {
     constructor(){
         this.answer = '',
         this.isCorrectAnswer = false,
-        this.answeredByUser = 'Admin'
+        this.answeredByUser = ''
     }
 }
 
@@ -15,7 +15,7 @@ export class Question {
     question: string;
     askedByUser: string;
     answers: Answer[];
-    constructor(tag: string = '', question: string = '', askedByUser: string = '', answers: Answer[] = [new Answer()]){
+    constructor(tag: string = '', question: string = '', askedByUser: string = '', answers: Answer[] = []){
         this.tag = tag,
         this.question = question,
         this.askedByUser = askedByUser,
