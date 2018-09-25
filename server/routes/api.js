@@ -1,70 +1,74 @@
 const express = require('express');
 const router = express.Router();
-const MongoClient = require('mongodb').MongoClient;
-const ObjectID = require('mongodb').ObjectID;
-const url = 'mongodb://localhost:27017';
+// const MongoClient = require('mongodb').MongoClient;
+const {mongoose} = require('./../db/mongoose');
+// const ObjectID = require('mongodb').ObjectID;
+// const url = 'mongodb://localhost:27017';
 const { User } = require('./../models/user');
+const { Question } = require('./../models/questions');
 
 var { authenticate } = require('./../middleware/authenticate');
-var db;
 
-MongoClient.connect(url, { useNewUrlParser: true }, (err, client) => {
-    if (err) {
-        console.log('Unable to connect to MongoDB server.');
-    } else {
-        console.log('Connected to MongoDB server.');
-    }
+// var db;
 
-    db = client.db('mydb');
-});
+// MongoClient.connect(url, { useNewUrlParser: true }, (err, client) => {
+//     if (err) {
+//         console.log('Unable to connect to MongoDB server.');
+//     } else {
+//         console.log('Connected to MongoDB server.');
+//     }
+
+//     db = client.db('mydb');
+// });
 
 function deleteQuestion(id) {
-    db.collection('qna').findOneAndDelete({ _id: new ObjectID(id) }).then((result) => {
-        console.log(JSON.stringify(result.value, undefined, 2));
-    });
+    // db.collection('qna').findOneAndDelete({ _id: new ObjectID(id) }).then((result) => {
+    //     console.log(JSON.stringify(result.value, undefined, 2));
+    // });
+    Question.deleteQuestion(id);
 }
 
 function updateQuestion(id, newQuestion) {
-    console.log(id, newQuestion);
-    db.collection('qna').findOneAndUpdate({
-        //filter
-        _id: new ObjectID(id)
-    }, {
-            //update
-            $set: { question: newQuestion }
-        }, {
-            //option
-            returnOriginal: false
-        }, (err, res) => {
-            if (err) {
-                console.log(err);
-            }
-        });
+    Question.updateQuestion(id, newQuestion)
+    // db.collection('qna').findOneAndUpdate({
+    //     //filter
+    //     _id: new ObjectID(id)
+    // }, {
+    //         //update
+    //         $set: { question: newQuestion }
+    //     }, {
+    //         //option
+    //         returnOriginal: false
+    //     }, (err, res) => {
+    //         if (err) {
+    //             console.log(err);
+    //         }
+    //     });
 }
 
-function updateAnswer(id, oldAnswer, newAnswer) {
-    db.collection('qna').updateOne(
-        { _id: new ObjectID(id) },
-        { $set: { 'answers.$[element].answer': newAnswer.answer } },
-        //Filter answers array to update
-        { arrayFilters: [{ "element.answer": oldAnswer.answer }] }
-    )
-}
+// function updateAnswer(id, oldAnswer, newAnswer) {
+    // db.collection('qna').updateOne(
+    //     { _id: new ObjectID(id) },
+    //     { $set: { 'answers.$[element].answer': newAnswer.answer } },
+    //     //Filter answers array to update
+    //     { arrayFilters: [{ "element.answer": oldAnswer.answer }] }
+    // )
+// }
 
-function addAnswer(id, answer) {
-    db.collection('qna').updateOne(
-        { _id: new ObjectID(id) },
-        //Push answer to answers array
-        { $push: { answers: answer } }
-    )
-}
+// function addAnswer(id, answer) {
+    // db.collection('qna').updateOne(
+    //     { _id: new ObjectID(id) },
+    //     //Push answer to answers array
+    //     { $push: { answers: answer } }
+    // )
+// }
 
-function deleteAnswer(id, answer) {
-    db.collection('qna').updateOne(
-        { _id: new ObjectID(id) },
-        { $pull: { answers: { answer: answer.answer } } }
-    )
-}
+// function deleteAnswer(id, answer) {
+    // db.collection('qna').updateOne(
+    //     { _id: new ObjectID(id) },
+    //     { $pull: { answers: { answer: answer.answer } } }
+    // )
+// }
 
 //Timelog middleware that is specific to this route
 // router.use(function timeLog(req, res, next) {
@@ -74,35 +78,37 @@ function deleteAnswer(id, answer) {
 
 //Create questions
 router.post('/q', (req, res) => {
-    db.collection('qna').insertOne(req.body, (error, result) => {
-        if (error) {
-            console.log('Cannot insert document');
-        }
-        res.status(200).send(result.ops[0]._id);
-        console.log(result.ops[0]._id)
-    });
+    Question.createQuestion(req, res);
+    // db.collection('qna').insertOne(req.body, (error, result) => {
+    //     if (error) {
+    //         console.log('Cannot insert document');
+    //     }
+    //     res.status(200).send(result.ops[0]._id);
+    // });
 });
 
 //Find questions
 router.get('/q/:id', (req, res) => {
-    db.collection('qna').findOne({ _id: new ObjectID(req.params.id) }, (err, doc) => {
-        if (err) {
-            console.log('Unable to fetch data ', err);
-        } else {
-            res.json(doc);
-        }
-    })
+    Question.findQuestionsByID(req, res);
+    // db.collection('qna').findOne({ _id: new ObjectID(req.params.id) }, (err, doc) => {
+    //     if (err) {
+    //         console.log('Unable to fetch data ', err);
+    //     } else {
+    //         res.json(doc);
+    //     }
+    // })
 });
 
 //Fetch all questions
 router.get('/q', (req, res) => {
-    db.collection('qna').find().toArray((err, doc) => {
-        if (err) {
-            console.log('Unable to fetch data ', err);
-        } else {
-            res.json(doc);
-        }
-    });
+    Question.getAllQuestions(req, res);
+    // db.collection('qna').find().toArray((err, doc) => {
+    //     if (err) {
+    //         console.log('Unable to fetch data ', err);
+    //     } else {
+    //         res.json(doc);
+    //     }
+    // });
 })
 
 //Update question
@@ -117,39 +123,40 @@ router.delete('/q/:id', (req, res) => {
 
 //Add answer
 router.put('/a/add', (req, res) => {
-    addAnswer(req.body.id, req.body.answer);
+    Question.addAnswer(req.body.id, req.body.answer);
 });
 
 //Update answer 
 router.put('/a/update', (req, res) => {
-    updateAnswer(req.body.id, req.body.oldAnswer, req.body.newAnswer);
+    Question.updateAnswer(req.body.id, req.body.oldAnswer, req.body.newAnswer);
 });
 
 //Delete answer
 router.put('/a/delete', (req, res) => {
-    deleteAnswer(req.body.id, req.body.answer);
+    Question.deleteAnswer(req.body.id, req.body.answer);
 });
 
 //Get user info (private route)
 router.get('/user/me', authenticate, (req, res) => {
-    let user = req.user;
-    let userQuestions;
-    let userAnswers;
+    Question.findQuestionsByUser(req, res);
+    // let user = req.user;
+    // let userQuestions;
+    // let userAnswers;
 
-    db.collection('qna').find({ askedByUser: user.username }).toArray().then(docs => {
-        userQuestions = docs;
-        db.collection('qna').find(
-            {
-                answers: {
-                    $elemMatch: {
-                        answeredByUser: user.username
-                    }
-                }
-            }).toArray().then(docs => {
-                userAnswers = docs;
-                res.json({user, userQuestions, userAnswers });
-            });
-    });
+    // db.collection('qna').find({ askedByUser: user.username }).toArray().then(docs => {
+    //     userQuestions = docs;
+    //     db.collection('qna').find(
+    //         {
+    //             answers: {
+    //                 $elemMatch: {
+    //                     answeredByUser: user.username
+    //                 }
+    //             }
+    //         }).toArray().then(docs => {
+    //             userAnswers = docs;
+    //             res.json({user, userQuestions, userAnswers });
+    //         });
+    // });
 
 })
 
