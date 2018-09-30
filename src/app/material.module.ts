@@ -15,6 +15,8 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatCardModule} from '@angular/material/card';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatBadgeModule} from '@angular/material/badge';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatSidenavModule} from '@angular/material/sidenav';
 
 @NgModule({
     imports:[
@@ -33,6 +35,8 @@ import {MatBadgeModule} from '@angular/material/badge';
         MatCardModule,
         MatTabsModule,
         MatBadgeModule,
+        MatPaginatorModule,
+        MatSidenavModule,
         BrowserAnimationsModule
     ],
     exports:[
@@ -50,6 +54,8 @@ import {MatBadgeModule} from '@angular/material/badge';
         MatCardModule,
         MatTabsModule,
         MatBadgeModule,
+        MatPaginatorModule,        
+        MatSidenavModule,
         MatDialogModule
     ]
 })

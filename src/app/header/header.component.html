@@ -1,7 +1,36 @@
 <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center">
-  <a routerLink='' mat-button color="primary" class="white-font no-hover-effect title">
+  <div fxLayout="row">
+    <mat-sidenav-container hasBackdrop="true" fxHide fxShow.lt-lg="true">
+      <mat-sidenav #drawer [(opened)]="opened" mode="over" position="end" fixedInViewport="true" class="side-nav">
+        <div fxLayout="column" fxLayoutAlign="start start" class="margin">
+          <div class="search-bar">
+            <mat-form-field>
+              <input matInput type="search" placeholder="Search" #search autocomplete="off">
+            </mat-form-field>
+            <button mat-button>
+              <mat-icon matSuffix (click)="findQuestions(search.value)">search</mat-icon>
+            </button>
+          </div>
+          <a (click)="showPopularTags()" mat-button class="bigSize no-hover-effect">Popular tags</a>
+          <div *ngFor="let tag of allTags" class="tag">
+            <a (click)="filterTag(tag)" >{{ tag }}</a>
+          </div>
+
+        </div>
+      </mat-sidenav>
+
+      <mat-sidenav-content>
+        <button mat-button (click)="drawer.toggle()" class="sidenav-button">
+          <mat-icon class="big-size"> {{opened ? 'close' : 'menu'}}</mat-icon>
+        </button>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+
+    <a routerLink='' mat-button color="primary" class="white-font no-hover-effect title">
       QnA
-  </a>
+    </a>
+
+  </div>
 
   <div *ngIf="!isLoggedin">
     <a routerLink='/login' mat-stroked-button color="primary" class="white-font">
@@ -13,7 +42,7 @@
 
   </div>
   <div *ngIf="isLoggedin">
-    <a routerLink='/user' mat-stroked-button color="primary" class="white-font"> 
+    <a routerLink='/user' mat-stroked-button color="primary" class="white-font">
       User
     </a>
     <button (click)="onLogout()" mat-stroked-button color="primary" class="white-font">

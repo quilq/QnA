@@ -2,24 +2,44 @@
     min-height: 100vh;
 }
 
-p:hover{
+.hight-light:hover{
     color: blue;
     cursor: pointer;
+}
+
+.hight-light{
+    font-size: 125%;
 }
 
 .left, .right{
     padding: 2%;
 }
 
-.all-tags, .all-questions {
+.all-questions {
     margin: 1% 2%;
     padding: 1%;
+}
+
+.all-tags {
+    margin: 3% 0% 3% 8%;
 }
 
 .small-icon { 
     font-size: 18px; 
 }
 
+.bigSize{
+    font-size: 2em;
+}
+
 textarea{
     width: 100%;
+}
+
+.top-margin{
+    margin-top: 3%;
+}
+
+mat-divider.margin{
+    margin: 3% 0%;
 }

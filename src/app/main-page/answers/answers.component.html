@@ -2,7 +2,9 @@
 <div fxLayout.gt-sm="row" fxLayout.lt-md="column" fxLayoutAlign="space-between none" class="full-page">
     <div class="left" fxFlex="70">
         <h1>{{question.question}}</h1>
-        <p> <mat-icon class="small-icon">folder</mat-icon> {{question.tag}}</p>
+        <p>
+            <mat-icon class="small-icon">folder</mat-icon> {{question.tag}}
+        </p>
         <p>
             <mat-icon class="small-icon" matSuffix>person</mat-icon>
             {{question.askedByUser}}
@@ -11,7 +13,7 @@
         <div *ngFor="let answer of answers; let i = index" class="all-answers" fxLayout="column" fxLayoutAlign="space-between none">
             <div>
                 <span>{{answers[i].isCorrectAnswer ? 'Accepted answer.' : '' }} </span>
-                    <mat-icon matSuffix>{{answers[i].isCorrectAnswer ? 'done_all' : '' }}</mat-icon>
+                <mat-icon matSuffix>{{answers[i].isCorrectAnswer ? 'done_all' : '' }}</mat-icon>
             </div>
 
             <div fxLayout="row" fxLayoutAlign="space-between none">
@@ -62,8 +64,11 @@
         </mat-expansion-panel>
 
         <div class="related-questions">
-            <h2> Related questions </h2>
-            <p *ngFor="let question of relatedQuestions"> {{question.question}}</p>
+            <h1> Related questions </h1>
+            <p *ngFor="let question of relatedQuestions" class="hight-light" (click)="viewQiestion(question)">
+                {{question.question}}
+                <mat-divider class="margin"></mat-divider>
+            </p>
         </div>
     </div>
 </div>

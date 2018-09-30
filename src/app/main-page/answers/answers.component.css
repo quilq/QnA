@@ -3,11 +3,15 @@
 }
 
 .left{
-    padding: 2%;
+    margin: 3%;
 }
 
 .right{
-    margin: 2%;
+    margin: 3%;
+}
+
+.title {
+    font-size: 1.5em;
 }
 
 .small-icon, .small-icon:hover { 
@@ -21,10 +25,27 @@
 }
 
 .related-questions{
-    margin-top: 10%;
-    margin-left: 1%;
+    margin-top: 5%;
 }
 
 mat-form-field {
     width: 100%;
+}
+
+mat-expansion-panel{
+    margin: 0 !important;
+}
+
+.hight-light:hover{
+    color: blue;
+    cursor: pointer;
+}
+
+.hight-light{
+    font-size: 125%;
+    margin: 2% 0% 0% 2%;
+}
+
+mat-divider.margin{
+    margin: 3% 0%;
 }

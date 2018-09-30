@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Question, Answer } from '../../question';
 import { HttpService } from '../../http.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UserService, User } from '../../user.service';
+import { UserService } from '../../user.service';
+import { Answer, Question } from '../../question';
+import { User } from '../../user';
+import { QuestionService } from '../../question.service';
 
 @Component({
   selector: 'app-answers',
@@ -16,6 +18,7 @@ export class AnswersComponent implements OnInit {
     private httpService: HttpService,
     private userService: UserService,
     private route: ActivatedRoute,
+    private questionService: QuestionService,
     private router: Router
   ) { }
 
@@ -32,23 +35,39 @@ export class AnswersComponent implements OnInit {
   question: Question = new Question();
   relatedQuestions: Question[] = [new Question()];
   editable: boolean[] = [];
+  allQuestions: Question[] = [];
 
   ngOnInit() {
     let id = this.route.snapshot.paramMap.get('id');
     this.httpService.findQuestion(id).subscribe((question: Question) => {
       this.question = question;
       this.answers = question.answers;
+      this.editable = [];
       for (let i = 0; i < this.answers.length; i++) {
         this.editable[i] = false;
       }
     });
-    this.userService.onGetUser();
+    if (this.httpService.isLoggedin()) {
+      this.userService.onGetUser();
+    }
+
     this.userService.info.subscribe(info => {
       this.user = info.user;
     })
+    
+    this.questionService.allQuestions$.subscribe(questions => {
+      this.allQuestions = questions;
+      this.relatedQuestions = this.allQuestions.filter(question => question.tag === this.question.tag);
+    })
   }
 
-  findRelatedQuestions() {
+  viewQiestion(question){
+    this.question = question;
+    this.answers = question.answers;
+    this.editable = [];
+    for (let i = 0; i < this.answers.length; i++) {
+      this.editable[i] = false;
+    }
   }
 
   canEdit() {
