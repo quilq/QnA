@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../../http.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UserService } from '../../user.service';
-import { Answer, Question } from '../../question';
-import { User } from '../../user';
-import { QuestionService } from '../../question.service';
+import { UserService } from '../../user/user.service';
+import { Answer, Question } from '../question';
+import { User } from '../../user/user';
+import { QuestionService } from '../question.service';
 
 @Component({
   selector: 'app-answers',
@@ -25,7 +25,7 @@ export class AnswersComponent implements OnInit {
   currentAnswer: Answer;
   open = false;
   user: User = new User();
-  
+
   setOpen() {
     this.open = true;
   }
@@ -34,8 +34,10 @@ export class AnswersComponent implements OnInit {
   answers: Answer[] = [new Answer()];
   question: Question = new Question();
   relatedQuestions: Question[] = [new Question()];
+  userAnswers: Question[] = [new Question()];
   editable: boolean[] = [];
   allQuestions: Question[] = [];
+  isLoggedin = false;
 
   ngOnInit() {
     let id = this.route.snapshot.paramMap.get('id');
@@ -47,21 +49,26 @@ export class AnswersComponent implements OnInit {
         this.editable[i] = false;
       }
     });
-    if (this.httpService.isLoggedin()) {
-      this.userService.onGetUser();
-    }
 
-    this.userService.info.subscribe(info => {
-      this.user = info.user;
+    this.userService.checkUser$.subscribe(isLoggedin => {
+      this.isLoggedin = isLoggedin;
     })
-    
+
+    this.userService.user$.subscribe(user => {
+      this.user = user;
+    });
+
+    this.userService.userAnswers$.subscribe(userAnswers => {
+      this.userAnswers = userAnswers;
+    });
+
     this.questionService.allQuestions$.subscribe(questions => {
       this.allQuestions = questions;
       this.relatedQuestions = this.allQuestions.filter(question => question.tag === this.question.tag);
     })
   }
 
-  viewQiestion(question){
+  viewQiestion(question) {
     this.question = question;
     this.answers = question.answers;
     this.editable = [];
@@ -71,7 +78,7 @@ export class AnswersComponent implements OnInit {
   }
 
   canEdit() {
-    return this.httpService.isLoggedin();
+    return this.isLoggedin;
   }
 
   addAnswer(question: Question, answer: Answer) {
@@ -119,6 +126,23 @@ export class AnswersComponent implements OnInit {
     this.editable[i] = false;
   }
 
+  markAnswer(i: number) {
+    if ((this.user.username === this.question.askedByUser) && (this.answers[i].isCorrectAnswer !== true)) {
+      this.httpService.updateCorrectAnswer(this.question, i).subscribe();
+
+      for (let index = 0; index < this.answers.length; index++) {
+        if (this.answers[index].isCorrectAnswer === true) {
+          this.answers[index].isCorrectAnswer = false;
+          break;
+        }
+
+      }
+      this.answers[i].isCorrectAnswer = true;
+    } else if (this.user.username !== this.question.askedByUser) {
+      alert('You are not the author of this question!');
+    }
+  }
+
   onUpdate(i: number, answer: string) {
     if (this.user.username === this.answers[i].answeredByUser) {
 
@@ -132,6 +156,7 @@ export class AnswersComponent implements OnInit {
       this.onCancel(i);
     } else {
       alert('You cannot update other users\' answers !');
+      this.onCancel(i);
     }
   }
 

@@ -17,6 +17,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatBadgeModule} from '@angular/material/badge';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatChipsModule} from '@angular/material/chips';
 
 @NgModule({
     imports:[
@@ -37,6 +38,7 @@ import {MatSidenavModule} from '@angular/material/sidenav';
         MatBadgeModule,
         MatPaginatorModule,
         MatSidenavModule,
+        MatChipsModule,
         BrowserAnimationsModule
     ],
     exports:[
@@ -56,6 +58,7 @@ import {MatSidenavModule} from '@angular/material/sidenav';
         MatBadgeModule,
         MatPaginatorModule,        
         MatSidenavModule,
+        MatChipsModule,
         MatDialogModule
     ]
 })

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Question, Answer } from './question';
+import { Question, Answer } from './main-page/question';
 
 @Injectable({
   providedIn: 'root'
@@ -9,14 +9,6 @@ import { Question, Answer } from './question';
 export class HttpService {
 
   constructor(private httpClient: HttpClient) { }
-
-  isLoggedin() {
-    if (localStorage.getItem('token')) {
-      return true;
-    } else {
-      return false;
-    }
-  }
 
   getAllQuestions() {
     return this.httpClient.get('api/q');
@@ -59,6 +51,12 @@ export class HttpService {
     let id = question._id;
     let url = `api/a/update`;
     return this.httpClient.put(url, { id, oldAnswer, newAnswer });
+  }
+
+  updateCorrectAnswer(question: Question, i: number){
+    let id = question._id;
+    let url = `api/a/update2`;
+    return this.httpClient.put(url, { id, i });
   }
 
   deleteAnswer(question: Question, answer: Answer) {

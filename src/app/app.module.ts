@@ -8,11 +8,10 @@ import { Material } from './material.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
-import { HeaderComponent } from './header/header.component';
-import { FooterComponent } from './footer/footer.component';
+import { FooterComponent } from './home/footer/footer.component';
 import { UserComponent } from './user/user.component';
-import { LoginComponent } from './login/login.component';
-import { SignupComponent } from './signup/signup.component';
+import { LoginComponent } from './user/login/login.component';
+import { SignupComponent } from './user/signup/signup.component';
 import { MainPageComponent } from './main-page/main-page.component';
 import { AnswersComponent } from './main-page/answers/answers.component';
 
@@ -21,7 +20,6 @@ import { AnswersComponent } from './main-page/answers/answers.component';
   declarations: [
     AppComponent,
     HomeComponent,
-    HeaderComponent,
     FooterComponent,
     UserComponent,
     LoginComponent,

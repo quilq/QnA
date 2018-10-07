@@ -26,17 +26,6 @@ var UserSchema = new mongoose.Schema({
         require: true,
         minlength: 6
     }
-    // ,
-    // tokens: [{
-    //     access: {
-    //         type: String,
-    //         required: true
-    //     },
-    //     token: {
-    //         type: String,
-    //         required: true
-    //     }
-    // }]
 });
 
 //Hash password before saving
@@ -61,12 +50,6 @@ UserSchema.methods.generateAuthToken = function () {
     var access = 'auth';
 
     var token = jwt.sign({ _id: user._id.toHexString(), access }, process.env.JWT_SECRET).toString();
-
-    // user.tokens = user.tokens.concat([{ access, token }]);
-    // return user.save().then(() => {
-    //     return token;
-    // })
-
     return Promise.resolve(token);
 }
 
@@ -96,13 +79,6 @@ UserSchema.statics.findByCredentials = function (email, password) {
 UserSchema.statics.findByToken = function(token){
     var User = this;
     var decoded;
-
-    // return jwt.verify(token, process.env.JWT_SECRET, (err, decoded) =>{
-    //     if (err) {
-    //         return Promise.reject(err);
-    //     }
-    //     return Promise.resolve();
-    // })
     
     try{
         decoded = jwt.verify(token, process.env.JWT_SECRET);
@@ -117,15 +93,6 @@ UserSchema.statics.findByToken = function(token){
         // 'tokens.access':'auth'
     });
 }
-
-// UserSchema.methods.removeToken = function (token) {
-//     var user = this;
-//     return user.update({
-//         $pull: {
-//             tokens: { token }
-//         }
-//     });
-// }
 
 //Modify object sent back to user (only send id & email)
 UserSchema.methods.toJSON = function(){

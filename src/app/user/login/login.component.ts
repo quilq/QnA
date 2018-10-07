@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpService } from '../http.service';
-import { FormGroup, FormControl } from '@angular/forms';
+import { HttpService } from '../../http.service';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-login',
@@ -10,14 +11,16 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private httpServie: HttpService, private router: Router) { }
+  constructor(private httpServie: HttpService, 
+    private router: Router,
+    private userService: UserService) { }
 
   ngOnInit() {
   }
 
   loginForm = new FormGroup({
-    email: new FormControl(''),
-    password: new FormControl('')
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required, Validators.minLength(6)])
   })
 
   hide = true;
@@ -30,6 +33,7 @@ export class LoginComponent implements OnInit {
     let user = { email, password };
     this.httpServie.login(user).subscribe(response => {
       localStorage.setItem('token', response.headers.get('x-auth'));
+      this.userService.onGetUser();
       this.router.navigate(['/user']);
     }, (err) => {
       console.log(err);

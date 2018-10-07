@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Question } from './question';
-import { HttpService } from './http.service';
-import { Subject } from 'rxjs';
+import { HttpService } from '../http.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,9 +10,9 @@ export class QuestionService {
 
   constructor(private httpService: HttpService) { }
 
-  allQuestions$: Subject<Question[]> = new Subject<Question[]>();
-  filteredQuestions$: Subject<Question[]> = new Subject<Question[]>();
-  allTags$: Subject<string[]> = new Subject<string[]>();
+  allQuestions$ = new BehaviorSubject<Question[]>([]);
+  filteredQuestions$ = new BehaviorSubject<Question[]>([]);
+  allTags$ = new BehaviorSubject<string[]>([]);
 
   allQuestions: Question[] = [];
   filteredQuestions: Question[] = [];

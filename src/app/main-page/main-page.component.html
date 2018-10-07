@@ -7,16 +7,21 @@
             <mat-icon matSuffix>add</mat-icon> Ask your question
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <div fxLayout="column">
+        <div fxLayout="column" >
           <mat-form-field appearance="outline">
-            <textarea matInput placeholder="Your question" rows="3" #newQuestion autocomplete="off"></textarea>
+            <textarea matInput placeholder="Your question" rows="3" 
+            #newQuestion="ngModel" autocomplete="off" ngModel required #newQuestion1>
+            </textarea>
+            <mat-error *ngIf="newQuestion.invalid">Required</mat-error>
           </mat-form-field>
           <mat-form-field appearance="fill">
-            <input matInput matInput placeholder="tag" appearance="legacy" autocomplete="off" #tag>
+            <input matInput matInput placeholder="tag" appearance="legacy" 
+            autocomplete="off" #tag="ngModel" ngModel required #tag1>
+            <mat-error *ngIf="tag.invalid">Required</mat-error>
           </mat-form-field>
         </div>
         <mat-action-row>
-          <button mat-raised-button (click)="onCreateQuestion(newQuestion, tag)">Ok</button>
+          <button [disabled]="tag.invalid || newQuestion.invalid" mat-raised-button (click)="onCreateQuestion(newQuestion1, tag1)">Ok</button>
         </mat-action-row>
       </mat-expansion-panel>
     </div>
@@ -26,10 +31,9 @@
     <div *ngFor="let question of questionsToShow; let i = index" class="all-questions">
       <div fxLayout="row" fxLayoutAlign="space-between none">
         <div>
-
-          <p [routerLink]="['/answers', question._id]" class="hight-light">
+          <h2 [routerLink]="['/answers', question._id]" class="hight-light">
             {{question.question}}
-          </p>
+          </h2>
           <button mat-stroked-button color="primary" [routerLink]="['/answers', question._id]">
             {{question.answers.length}} answers
           </button>
@@ -41,23 +45,6 @@
             {{question.askedByUser}}
           </p>
 
-        </div>
-        <span fxLayout="row" *ngIf="canEdit()">
-          <p (click)="onUpdateQuestion(i)" matTooltip="Edit question">
-            <mat-icon class="small-icon" matSuffix>edit</mat-icon>
-          </p>
-          <p (click)="onDeleteQuestion(i)" matTooltip="Delete question">
-            <mat-icon class="small-icon" matSuffix>clear</mat-icon>
-          </p>
-        </span>
-      </div>
-      <div *ngIf="editable[i]">
-        <mat-form-field>
-          <textarea matInput placeholder="Edit this question" #updatedQuestion></textarea>
-        </mat-form-field>
-        <div>
-          <button mat-raised-button (click)="onCancel(i)">Cancel</button>
-          <button mat-raised-button (click)="onUpdate(i, updatedQuestion.value)">Update</button>
         </div>
       </div>
       <mat-divider></mat-divider>
@@ -80,7 +67,7 @@
     <a (click)="showPopularTags()" mat-button class="bigSize no-hover-effect">Popular tags</a>
     <div *ngFor="let tag of allTags" class="all-tags hight-light">
       <p (click)="filterTag(tag)">{{ tag }}</p>
-      <mat-divider class="margin"></mat-divider>
+      <mat-divider></mat-divider>
     </div>
   </div>
 </div>

@@ -1,4 +1,3 @@
-<app-header></app-header>
 <div fxLayout.gt-sm="row" fxLayout.lt-md="column" fxLayoutAlign="space-between none" class="full-page">
     <div class="left" fxFlex="70">
         <h1>{{question.question}}</h1>
@@ -13,18 +12,21 @@
         <div *ngFor="let answer of answers; let i = index" class="all-answers" fxLayout="column" fxLayoutAlign="space-between none">
             <div>
                 <span>{{answers[i].isCorrectAnswer ? 'Accepted answer.' : '' }} </span>
-                <mat-icon matSuffix>{{answers[i].isCorrectAnswer ? 'done_all' : '' }}</mat-icon>
+                <mat-icon matSuffix >{{answers[i].isCorrectAnswer ? 'done_all' : '' }}</mat-icon>
             </div>
 
             <div fxLayout="row" fxLayoutAlign="space-between none">
                 <p>{{answers[i].answer}}</p>
                 <div fxLayout="row" *ngIf="canEdit()">
-                    <p (click)="onUpdateAnswer(i)" mat-button matTooltip="Edit answer">
+                    <button (click)="onUpdateAnswer(i)" mat-icon-button matTooltip="Edit answer">
                         <mat-icon class="small-icon" matSuffix>edit</mat-icon>
-                    </p>
-                    <p (click)="onDeleteAnswer(i)" mat-button matTooltip="Delete answer">
+                    </button>
+                    <button (click)="onDeleteAnswer(i)" mat-icon-button matTooltip="Delete answer">
                         <mat-icon class="small-icon" matSuffix>clear</mat-icon>
-                    </p>
+                    </button>
+                    <button (click)="markAnswer(i)" mat-icon-button matTooltip="Accept this answer">
+                        <mat-icon class="small-icon" matSuffix>done_all</mat-icon>
+                    </button>
                 </div>
             </div>
             <div *ngIf="editable[i]">
@@ -55,7 +57,7 @@
                 </mat-panel-title>
             </mat-expansion-panel-header>
             <mat-form-field appearance="outline">
-                <textarea matInput placeholder="Your answer" rows="5" #myAnswer></textarea>
+                <textarea matInput placeholder="Your answer" rows="5" #myAnswer required></textarea>
                 <div *ngIf="duplicateAnswer">The answer already exists ! </div>
             </mat-form-field>
             <mat-action-row>
@@ -72,4 +74,3 @@
         </div>
     </div>
 </div>
-<app-footer></app-footer>

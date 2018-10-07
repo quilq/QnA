@@ -1,4 +1,4 @@
-const {mongoose} = require('./../db/mongoose');
+const { mongoose } = require('./../db/mongoose');
 const ObjectID = require('mongodb').ObjectID;
 
 var QuestionSchema = new mongoose.Schema({
@@ -19,7 +19,7 @@ var QuestionSchema = new mongoose.Schema({
 // })
 
 //Find questions by user with model method
-QuestionSchema.statics.findQuestionsByUser = function(req, res){
+QuestionSchema.statics.findQuestionsByUser = function (req, res) {
     var Question = this;
     let user = req.user;
     let userQuestions;
@@ -36,12 +36,12 @@ QuestionSchema.statics.findQuestionsByUser = function(req, res){
                 }
             }).then(docs => {
                 userAnswers = docs;
-                res.json({user, userQuestions, userAnswers });
+                res.json({ user, userQuestions, userAnswers });
             });
     });
 }
 
-QuestionSchema.statics.findQuestionsByID = function(req, res){
+QuestionSchema.statics.findQuestionsByID = function (req, res) {
     var Question = this;
     Question.findById({ _id: new ObjectID(req.params.id) }, (error, doc) => {
         if (error) {
@@ -52,7 +52,7 @@ QuestionSchema.statics.findQuestionsByID = function(req, res){
     })
 }
 
-QuestionSchema.statics.getAllQuestions = function(req, res){
+QuestionSchema.statics.getAllQuestions = function (req, res) {
     var Question = this;
     Question.find((error, doc) => {
         if (error) {
@@ -63,7 +63,7 @@ QuestionSchema.statics.getAllQuestions = function(req, res){
     });
 }
 
-QuestionSchema.statics.createQuestion = function(req, res){
+QuestionSchema.statics.createQuestion = function (req, res) {
     var Question = this;
 
     Question.create(req.body, (error, result) => {
@@ -74,7 +74,7 @@ QuestionSchema.statics.createQuestion = function(req, res){
     });
 }
 
-QuestionSchema.statics.updateQuestion = function(id, newQuestion){
+QuestionSchema.statics.updateQuestion = function (id, newQuestion, res) {
     var Question = this;
 
     Question.findOneAndUpdate({
@@ -89,28 +89,31 @@ QuestionSchema.statics.updateQuestion = function(id, newQuestion){
         }, (error, result) => {
             if (error) {
                 console.log(error);
-            }
+            };
+            res.status(200).send(result);
         });
+
 }
 
-QuestionSchema.statics.deleteQuestion = function(id){
+QuestionSchema.statics.deleteQuestion = function (id, res) {
     var Question = this;
 
     Question.findOneAndDelete({ _id: new ObjectID(id) }, (error, result) => {
-         if (error) {
-             console.log(error);
-         }
-        });
+        if (error) {
+            console.log(error);
+        };
+        res.status(200).send(result);
+    });
 }
 
-QuestionSchema.statics.addAnswer = function(id, answer){
+QuestionSchema.statics.addAnswer = function (id, answer) {
     var Question = this;
 
     Question.updateOne(
         { _id: new ObjectID(id) },
         //Push answer to answers array
         { $push: { answers: answer } },
-        (error, result) =>{
+        (error, result) => {
             if (error) {
                 console.log(error);
             }
@@ -118,13 +121,13 @@ QuestionSchema.statics.addAnswer = function(id, answer){
     )
 }
 
-QuestionSchema.statics.deleteAnswer = function(id, answer){
+QuestionSchema.statics.deleteAnswer = function (id, answer) {
     var Question = this;
 
     Question.updateOne(
         { _id: new ObjectID(id) },
         { $pull: { answers: { answer: answer.answer } } },
-        (error, result) =>{
+        (error, result) => {
             if (error) {
                 console.log(error);
             }
@@ -132,7 +135,7 @@ QuestionSchema.statics.deleteAnswer = function(id, answer){
     )
 }
 
-QuestionSchema.statics.updateAnswer = function(id, oldAnswer, newAnswer){
+QuestionSchema.statics.updateAnswer = function (id, oldAnswer, newAnswer) {
     var Question = this;
 
     Question.updateOne(
@@ -140,7 +143,35 @@ QuestionSchema.statics.updateAnswer = function(id, oldAnswer, newAnswer){
         { $set: { 'answers.$[element].answer': newAnswer.answer } },
         //Filter answers array to update
         { arrayFilters: [{ "element.answer": oldAnswer.answer }] },
-        (error, result) =>{
+        (error, result) => {
+            if (error) {
+                console.log(error);
+            }
+        }
+    )
+}
+
+QuestionSchema.statics.updateCorrectAnswer = function (id, i) {
+    var Question = this;
+
+    Question.updateOne(
+        { _id: new ObjectID(id), 'answers.isCorrectAnswer': true },
+        { $set: { 'answers.$.isCorrectAnswer': false } },
+        (error, result) => {
+            if (error) {
+                console.log(error);
+            }
+        }
+    )
+
+    setObject = {};
+    setObject['answers.'+i+'.isCorrectAnswer'] = true;
+    Question.updateOne(
+        { _id: new ObjectID(id) },
+        {
+            $set: setObject
+        },
+        (error, result) => {
             if (error) {
                 console.log(error);
             }
@@ -150,6 +181,5 @@ QuestionSchema.statics.updateAnswer = function(id, oldAnswer, newAnswer){
 
 
 var Question = mongoose.model('Question', QuestionSchema);
-// var Answer = mongoose.model('Answer', AnswerSchema);
 
-module.exports = {Question };
+module.exports = { Question };

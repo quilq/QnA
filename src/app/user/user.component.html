@@ -1,41 +1,91 @@
-<app-header></app-header>
-<div class="container">  
-  <div *ngIf="!didLogout">
+<div class="container">
+  <div *ngIf="isLoggedin">
     <mat-card>
       <mat-card-header>Welcome {{user.username}}</mat-card-header>
       <mat-card-content>
         <mat-list>
-            <mat-list-item> Your email: {{user.email}} </mat-list-item> 
-            <mat-list-item> Your password: ******** </mat-list-item>
+          <mat-list-item> Your email: {{user.email}} </mat-list-item>
+          <mat-list-item> Your password: ******** </mat-list-item>
         </mat-list>
       </mat-card-content>
     </mat-card>
-    
+
+    <mat-expansion-panel hideToggle [expanded]="open" (opened)="setOpen()">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <mat-icon matSuffix>add</mat-icon> Ask your question
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div fxLayout="column">
+        <mat-form-field appearance="outline">
+          <textarea matInput ngModel placeholder="Your question" rows="3" #newQuestion="ngModel" autocomplete="off" required #newQuestion1></textarea>
+          <mat-error *ngIf="newQuestion.invalid">Required</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <input matInput ngModel matInput placeholder="tag" appearance="legacy" autocomplete="off" #tag="ngModel" required #tag1>
+          <mat-error *ngIf="tag.invalid">Required</mat-error>
+        </mat-form-field>
+      </div>
+      <mat-action-row>
+        <button [disabled]="tag.invalid || newQuestion.invalid" mat-raised-button (click)="onCreateQuestion(newQuestion1, tag1)">Ok</button>
+      </mat-action-row>
+    </mat-expansion-panel>
+
     <mat-tab-group mat-stretch-tabs>
-        <mat-tab label="Your questions">
-          <mat-list>
-            <mat-list-item *ngFor="let question of userQuestions">
-              <p mat-line [routerLink]="['/answers', question._id]" class="hover">{{question.question}}</p>
-              <p mat-line><mat-icon class="small-icon">folder</mat-icon> {{question.tag}}</p>
-              <mat-divider></mat-divider>
-            </mat-list-item>
-          </mat-list>
-        </mat-tab>
-        <mat-tab label="You have answered">
-          <mat-list>
-            <mat-list-item *ngFor="let question of userAnswers">
-              <p mat-line [routerLink]="['/answers', question._id]" class="hover">{{question.question}}</p>
-              <p mat-line><mat-icon class="small-icon">folder</mat-icon> {{question.tag}}</p>
-              <mat-divider></mat-divider>
-            </mat-list-item>
-          </mat-list>
-        </mat-tab>
-      </mat-tab-group>
+      <mat-tab label="Your questions">
+        <div *ngFor="let question of userQuestions ; let i = index" fxLayout="column" fxLayoutAlign="space-between none">
+          <div fxLayout="row" fxLayoutAlign="space-between none" class="all-questions">
+            <div>
+              <h2 [routerLink]="['/answers', question._id]" class="hover hight-light">{{question.question}} </h2>
+              <div></div>
+              <button mat-stroked-button color="primary" [routerLink]="['/answers', question._id]">
+                {{question.answers.length}} answers
+              </button>
+              <p>
+                <mat-icon class="small-icon">folder</mat-icon> {{question.tag}}
+              </p>
+
+            </div>
+            <span fxLayout="row" *ngIf="canEdit()">
+              <button (click)="onUpdateQuestion(i)" mat-icon-button matTooltip="Edit question">
+                <mat-icon class="small-icon" matSuffix>edit</mat-icon>
+              </button>
+              <button (click)="onDeleteQuestion(i)" mat-icon-button matTooltip="Delete question">
+                <mat-icon class="small-icon" matSuffix>clear</mat-icon>
+              </button>
+            </span>
+          </div>
+
+          <div *ngIf="editable[i]">
+            <mat-form-field>
+              <textarea matInput placeholder="Edit this question" #updatedQuestion></textarea>
+            </mat-form-field>
+            <div>
+              <button mat-raised-button (click)="onCancel(i)">Cancel</button>
+              <button mat-raised-button (click)="onUpdate(i, updatedQuestion.value)">Update</button>
+            </div>
+          </div>
+          <mat-divider></mat-divider>
+        </div>
+      </mat-tab>
+      <mat-tab label="You have answered">
+        <mat-list>
+          <mat-list-item *ngFor="let question of userAnswers; let i = index ">
+            <p matLine [routerLink]="['/answers', question._id]" class="hover">{{question.question}}</p>
+            <p matLine>
+              <mat-icon class="small-icon">folder</mat-icon> {{question.tag}}
+            </p>
+            <div matLine *ngFor="let answer of userAnswers[i].answers" class="hover hight-light" [routerLink]="['/answers', question._id]">
+              <h2 *ngIf="answer.answeredByUser === user.username">{{ answer.answer }}</h2>
+            </div>
+            <mat-divider></mat-divider>
+          </mat-list-item>
+        </mat-list>
+      </mat-tab>
+    </mat-tab-group>
   </div>
-  
-  <div *ngIf="didLogout">
+
+  <div *ngIf="!isLoggedin">
     You have signed out successfully !
   </div>
 </div>
-  
-<app-footer></app-footer>

@@ -19,3 +19,15 @@
 .hover:hover{
     cursor: pointer;
 }
+
+mat-expansion-panel {
+    margin-top: 3%;
+}
+
+.all-questions {
+    margin: 1% 0%;
+}
+
+.hight-light{
+    color: #33b5e5;
+}
