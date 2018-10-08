@@ -1,5 +1,5 @@
 .full-page{
-    min-height: 100vh;
+    min-height: 90vh;
 }
 
 .left{
@@ -14,7 +14,7 @@
     font-size: 1.5em;
 }
 
-.small-icon, .small-icon:hover { 
+.small-icon { 
     font-size: 18px;
     cursor: pointer;
 }

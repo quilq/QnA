@@ -1,10 +1,13 @@
 mat-form-field {
     padding: 0%;
-    width: 100%;
+    font-size: 0.8em;
 }
 
 mat-toolbar {
     background-color: #33b5e5;
+    z-index: 1000;
+    position: fixed;
+    top: 0;
 }
 
 .sidenav-button {
@@ -24,12 +27,8 @@ mat-toolbar {
     color: #ffffff;
 }
 
-.bigSize{
-    font-size: 2em;
-}
 
 .side-nav{
-    width: 50vw;
     background-color: #ffffff;
 }
 
@@ -44,4 +43,8 @@ mat-card {
 
 .search-icon:hover{
     cursor: pointer;
+}
+
+.offset{
+    margin-top: 64px;
 }

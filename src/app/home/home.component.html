@@ -1,5 +1,5 @@
 <mat-sidenav-container hasBackdrop="true">
-  <mat-sidenav #drawer [(opened)]="opened" mode="over" position="end" fixedInViewport="true" class="side-nav">
+  <mat-sidenav #drawer [(opened)]="opened" mode="over" position="end" fixedInViewport="true" class="side-nav" autosize>
     <mat-card>
       <mat-form-field appearance="outline">
         <input matInput type="search" placeholder="Search" #search autocomplete="off">
@@ -8,7 +8,7 @@
     </mat-card>
 
     <mat-card>
-      <a (click)="showPopularTags()" mat-button class="bigSize no-hover-effect">Popular tags</a>
+      <a (click)="showPopularTags()" mat-button class="title no-hover-effect">Popular tags</a>
       <mat-list *ngFor="let tag of allTags" class="tag">
         <mat-list-item (click)="filterTag(tag)">{{ tag }}</mat-list-item>
       </mat-list>
@@ -17,11 +17,11 @@
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <div class="margin">
+    <div class="side-nav">
       <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center" fxShow [fxHide]="onUserPage">
         <div fxLayout="row">
           <button mat-button (click)="drawer.toggle()" class="sidenav-button" fxHide [fxShow.lt-lg]="onMainPage">
-            <mat-icon class="big-size">menu</mat-icon>
+            <mat-icon class="title">{{opened ? 'close': 'menu'}}</mat-icon>
           </button>
           <a routerLink='' mat-button color="primary" class="white-font no-hover-effect title">
             QnA
@@ -47,7 +47,10 @@
         </div>
       </mat-toolbar>
 
-      <router-outlet (activate)="onActivate()"></router-outlet>
+      <div [ngClass]="onUserPage ? '' : 'offset'">
+        <router-outlet (activate)="onActivate()"></router-outlet>
+      </div>
+
 
     </div>
     <app-footer fxShow [fxHide]="onUserPage"></app-footer>

@@ -5,10 +5,11 @@ import { SignupComponent } from "./user/signup/signup.component";
 import { AnswersComponent } from "./main-page/answers/answers.component";
 import { UserComponent } from "./user/user.component";
 import { MainPageComponent } from "./main-page/main-page.component";
+import { AuthGuard } from "./auth.guard";
 
 const appRoutes: Routes = [
     { path: '', component: MainPageComponent },
-    { path: 'user', component: UserComponent },
+    { path: 'user', component: UserComponent, canActivate: [AuthGuard]},
     { path: 'login', component: LoginComponent },
     { path: 'signup', component: SignupComponent },
     { path: 'answers/:id', component: AnswersComponent },
