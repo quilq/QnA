@@ -20,8 +20,8 @@ button {
 
 .title{
     font-size: 3em;
-    margin-bottom: 12% !important;
-    color: lightseagreen;
+    margin: 10% 0% !important;
+    color: #33b5e5;
 }
 
 .blue-text:hover{

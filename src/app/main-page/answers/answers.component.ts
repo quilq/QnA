@@ -83,18 +83,12 @@ export class AnswersComponent implements OnInit {
 
   addAnswer(question: Question, answer: Answer) {
     if (this.canEdit()) {
-      this.httpService.addAnswer(question, answer).subscribe();
+      this.httpService.addAnswer(question, answer).subscribe(() => {}, (error) => {
+        this.userService.handleError(error)
+      });
     } else {
       this.router.navigate(['/login']);
     }
-  }
-
-  updateAnswer(question: Question, oldAnswer: Answer, newAnswer: Answer) {
-    this.httpService.updateAnswer(question, oldAnswer, newAnswer).subscribe();
-  }
-
-  deleteAnswer(question: Question, answer: Answer) {
-    this.httpService.deleteAnswer(question, answer).subscribe();
   }
 
   onAddAnswer(answer: string) {
@@ -128,7 +122,9 @@ export class AnswersComponent implements OnInit {
 
   markAnswer(i: number) {
     if ((this.user.username === this.question.askedByUser) && (this.answers[i].isCorrectAnswer !== true)) {
-      this.httpService.updateCorrectAnswer(this.question, i).subscribe();
+      this.httpService.updateCorrectAnswer(this.question, i).subscribe(() => {}, (error) => {
+        this.userService.handleError(error)
+      });
 
       for (let index = 0; index < this.answers.length; index++) {
         if (this.answers[index].isCorrectAnswer === true) {
@@ -141,6 +137,13 @@ export class AnswersComponent implements OnInit {
     } else if (this.user.username !== this.question.askedByUser) {
       alert('You are not the author of this question!');
     }
+  }
+
+  
+  updateAnswer(question: Question, oldAnswer: Answer, newAnswer: Answer) {
+    this.httpService.updateAnswer(question, oldAnswer, newAnswer).subscribe(() => {}, (error) => {
+      this.userService.handleError(error)
+    });
   }
 
   onUpdate(i: number, answer: string) {
@@ -158,6 +161,13 @@ export class AnswersComponent implements OnInit {
       alert('You cannot update other users\' answers !');
       this.onCancel(i);
     }
+  }
+
+  
+  deleteAnswer(question: Question, answer: Answer) {
+    this.httpService.deleteAnswer(question, answer).subscribe(() => {}, (error) => {
+      this.userService.handleError(error)
+    });
   }
 
   onDeleteAnswer(i: number) {

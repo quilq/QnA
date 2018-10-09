@@ -17,7 +17,7 @@ app.use(express.static(publicPath));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-//API for interacting with MongoDB (define after body-parser middleware)
+//API for interacting with MongoDB (after body-parser middleware)
 const api = require('./routes/api');
 app.use('/api', api);
 

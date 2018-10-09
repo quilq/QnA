@@ -8,7 +8,7 @@
     </mat-card>
 
     <mat-card>
-      <a (click)="showPopularTags()" mat-button class="title no-hover-effect">Popular tags</a>
+      <a (click)="showPopularTags()" mat-button class="title no-hover-effect no-padding">Popular tags</a>
       <mat-list *ngFor="let tag of allTags" class="tag">
         <mat-list-item (click)="filterTag(tag)">{{ tag }}</mat-list-item>
       </mat-list>
@@ -23,7 +23,7 @@
           <button mat-button (click)="drawer.toggle()" class="sidenav-button" fxHide [fxShow.lt-lg]="onMainPage">
             <mat-icon class="title">{{opened ? 'close': 'menu'}}</mat-icon>
           </button>
-          <a routerLink='' mat-button color="primary" class="white-font no-hover-effect title">
+          <a routerLink='' mat-button color="primary" class="white-font no-hover-effect title no-padding">
             QnA
           </a>
         </div>

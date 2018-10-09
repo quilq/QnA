@@ -146,7 +146,7 @@ export class MainPageComponent implements OnInit, AfterViewInit {
         this.userQuestions.push(question);
         this.userService.userQuestions$.next(this.userQuestions);
         this.setPageView();
-      });
+      }, (error) => {this.userService.handleError(error)});
       this.open = false;
     } else {
       this.router.navigate(['/login']);

@@ -13,7 +13,7 @@ var { authenticate } = require('./../middleware/authenticate');
 // })
 
 //Create questions
-router.post('/q', (req, res) => {
+router.post('/q', authenticate, (req, res) => {
     Question.createQuestion(req, res);
 });
 
@@ -28,35 +28,33 @@ router.get('/q', (req, res) => {
 })
 
 //Update question
-router.put('/q', (req, res) => {
+router.put('/q', authenticate, (req, res) => {
     Question.updateQuestion(req.body.id, req.body.newQuestion, res);
-    // res.json('update');
 });
 
 //Delete question
-router.delete('/q/:id', (req, res) => {
+router.delete('/q/:id', authenticate, (req, res) => {
     Question.deleteQuestion(req.params.id, res);
-    // res.json('delete');
 });
 
 
 //Add answer
-router.put('/a/add', (req, res) => {
+router.put('/a/add', authenticate, (req, res) => {
     Question.addAnswer(req.body.id, req.body.answer);
 });
 
 //Update answer 
-router.put('/a/update', (req, res) => {
+router.put('/a/update', authenticate, (req, res) => {
     Question.updateAnswer(req.body.id, req.body.oldAnswer, req.body.newAnswer);
 });
 
 //Update correct answer 
-router.put('/a/update2', (req, res) => {
+router.put('/a/update2', authenticate, (req, res) => {
     Question.updateCorrectAnswer(req.body.id, req.body.i);
 });
 
 //Delete answer
-router.put('/a/delete', (req, res) => {
+router.put('/a/delete', authenticate, (req, res) => {
     Question.deleteAnswer(req.body.id, req.body.answer);
 });
 
@@ -88,6 +86,7 @@ router.post('/user/login', (req, res) => {
             res.header('x-auth', token).send(user);
         });
     }).catch((e) => {
+        console.log('log in error ', e);
         res.status(400).send(e);
     });
 })

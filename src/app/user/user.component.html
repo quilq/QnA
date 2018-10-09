@@ -36,7 +36,7 @@
         <div *ngFor="let question of userQuestions ; let i = index" fxLayout="column" fxLayoutAlign="space-between none">
           <div fxLayout="row" fxLayoutAlign="space-between none" class="all-questions">
             <div>
-              <h2 [routerLink]="['/answers', question._id]" class="hover hight-light">{{question.question}} </h2>
+              <p [routerLink]="['/answers', question._id]" class="hover hight-light">Q. {{question.question}} </p>
               <div></div>
               <button mat-stroked-button color="primary" [routerLink]="['/answers', question._id]">
                 {{question.answers.length}} answers
@@ -71,12 +71,12 @@
       <mat-tab label="You have answered">
         <mat-list>
           <mat-list-item *ngFor="let question of userAnswers; let i = index ">
-            <p matLine [routerLink]="['/answers', question._id]" class="hover">{{question.question}}</p>
+            <p matLine [routerLink]="['/answers', question._id]" class="hover">Q. {{question.question}}</p>
             <p matLine>
               <mat-icon class="small-icon">folder</mat-icon> {{question.tag}}
             </p>
             <div matLine *ngFor="let answer of userAnswers[i].answers" class="hover hight-light" [routerLink]="['/answers', question._id]">
-              <h2 *ngIf="answer.answeredByUser === user.username">{{ answer.answer }}</h2>
+              <p *ngIf="answer.answeredByUser === user.username">A. {{ answer.answer }}</p>
             </div>
             <mat-divider></mat-divider>
           </mat-list-item>

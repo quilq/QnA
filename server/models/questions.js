@@ -12,33 +12,29 @@ var QuestionSchema = new mongoose.Schema({
     }]
 });
 
-// var AnswerSchema = new mongoose.Schema({
-//     answer: String,
-//     isCorrectAnswer: Boolean,
-//     answeredByUser: String
-// })
-
 //Find questions by user with model method
 QuestionSchema.statics.findQuestionsByUser = function (req, res) {
-    var Question = this;
-    let user = req.user;
-    let userQuestions;
-    let userAnswers;
-
-    Question.find({ askedByUser: user.username }).then(docs => {
-        userQuestions = docs;
-        Question.find(
-            {
-                answers: {
-                    $elemMatch: {
-                        answeredByUser: user.username
+    if (req.user){
+        var Question = this;
+        let user = req.user;
+        let userQuestions;
+        let userAnswers;
+    
+        Question.find({ askedByUser: user.username }).then(docs => {
+            userQuestions = docs;
+            Question.find(
+                {
+                    answers: {
+                        $elemMatch: {
+                            answeredByUser: user.username
+                        }
                     }
-                }
-            }).then(docs => {
-                userAnswers = docs;
-                res.json({ user, userQuestions, userAnswers });
-            });
-    });
+                }).then(docs => {
+                    userAnswers = docs;
+                    res.json({ user, userQuestions, userAnswers });
+                });
+        });
+    }
 }
 
 QuestionSchema.statics.findQuestionsByID = function (req, res) {

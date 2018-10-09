@@ -10,20 +10,14 @@ export class AuthGuard implements CanActivate, OnInit {
   constructor(private userService: UserService,
     private router: Router){}
 
-  isLoggedin = false;
-
   ngOnInit(){
-    this.userService.checkUser$.subscribe(isLoggedin => {
-      this.isLoggedin = isLoggedin;
-    })
   }
 
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
 
-      let url: string = state.url;
-      if (this.isLoggedin) {
+      if (localStorage.getItem('token')){
         return true;
       } else {
         this.router.navigate(['/login']);

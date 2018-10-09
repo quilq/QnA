@@ -17,7 +17,7 @@ export class HttpService {
   //Create questions
   createQuestion(question: Question) {
     let url = `api/q`;
-    return this.httpClient.post(url, question);
+    return this.httpClient.post(url, question, { headers: { 'x-auth': localStorage.getItem('token') } });
   }
 
   //Find questions
@@ -30,39 +30,39 @@ export class HttpService {
   updateQuestion(oldQuestion: Question, newQuestion: string) {
     let id = oldQuestion._id;
     let url = 'api/q';
-    return this.httpClient.put(url, { id, newQuestion });
+    return this.httpClient.put(url, { id, newQuestion }, { headers: { 'x-auth': localStorage.getItem('token') } });
   }
 
   //Delete question
   deleteQuestion(question: Question) {
     let id = question._id;
     let url = `api/q/${id}`;
-    return this.httpClient.delete(url);
+    return this.httpClient.delete(url, { headers: { 'x-auth': localStorage.getItem('token') } });
   }
 
   //Update answer
   addAnswer(question: Question, answer: Answer) {
     let id = question._id;
     let url = `api/a/add`;
-    return this.httpClient.put(url, { id, answer });
+    return this.httpClient.put(url, { id, answer }, { headers: { 'x-auth': localStorage.getItem('token') } });
   }
 
   updateAnswer(question: Question, oldAnswer: Answer, newAnswer: Answer) {
     let id = question._id;
     let url = `api/a/update`;
-    return this.httpClient.put(url, { id, oldAnswer, newAnswer });
+    return this.httpClient.put(url, { id, oldAnswer, newAnswer }, { headers: { 'x-auth': localStorage.getItem('token') } });
   }
 
   updateCorrectAnswer(question: Question, i: number){
     let id = question._id;
     let url = `api/a/update2`;
-    return this.httpClient.put(url, { id, i });
+    return this.httpClient.put(url, { id, i }, { headers: { 'x-auth': localStorage.getItem('token') } });
   }
 
   deleteAnswer(question: Question, answer: Answer) {
     let id = question._id;
     let url = `api/a/delete`;
-    return this.httpClient.put(url, { id, answer });
+    return this.httpClient.put(url, { id, answer }, { headers: { 'x-auth': localStorage.getItem('token') } });
   }
 
   login(user) {
@@ -70,14 +70,14 @@ export class HttpService {
     return this.httpClient.post(url, user, { observe: 'response' });
   }
 
-  logout(token: string) {
+  logout() {
     let url = `/api/user/me/token`;
-    return this.httpClient.delete(url, { headers: { 'x-auth': token } });
+    return this.httpClient.delete(url, { headers: { 'x-auth': localStorage.getItem('token') } });
   }
 
-  getUser(token: string) {
+  getUser() {
     let url = '/api/user/me';
-    return this.httpClient.get(url, { headers: { 'x-auth': token } });
+    return this.httpClient.get(url, { headers: { 'x-auth': localStorage.getItem('token') } });
   }
 
   signup(user) {

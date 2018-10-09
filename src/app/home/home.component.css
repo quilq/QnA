@@ -10,6 +10,11 @@ mat-toolbar {
     top: 0;
 }
 
+mat-card {
+    margin: 2%;
+    background-color: #ffffff;
+}
+
 .sidenav-button {
     background-color: #33b5e5;
     border-radius: 0%;
@@ -27,13 +32,7 @@ mat-toolbar {
     color: #ffffff;
 }
 
-
 .side-nav{
-    background-color: #ffffff;
-}
-
-mat-card {
-    margin: 2%;
     background-color: #ffffff;
 }
 
@@ -47,4 +46,8 @@ mat-card {
 
 .offset{
     margin-top: 64px;
+}
+
+.no-padding {
+    padding: 0;
 }

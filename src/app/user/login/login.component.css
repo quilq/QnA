@@ -7,7 +7,7 @@
 }
 
 .blue-hover:hover{
-    background-color: lightskyblue;
+    background-color: rgb(125, 198, 243);
 }
 
 mat-form-field{
@@ -20,12 +20,12 @@ button {
 
 .title{
     font-size: 3em;
-    margin-bottom: 12% !important;
-    color: lightseagreen;
+    margin: 10% 0% !important;
+    color: #33b5e5;
 }
 
 .blue-text:hover{
-    color: lightseagreen;
+    color: rgb(21, 204, 195);
 }
 
 

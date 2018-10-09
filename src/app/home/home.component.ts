@@ -67,15 +67,9 @@ export class HomeComponent implements OnInit {
 
   onLogout() {
     if (this.isLoggedin) {
-      this.logout(localStorage.getItem('token'));
+      localStorage.removeItem('token');
+      this.userService.onGetUser();
+      this.httpService.logout().subscribe();
     }
   }
-
-  logout(token: string) {
-    localStorage.removeItem('token');
-    this.userService.onGetUser();
-    this.router.navigate(['/user']);
-    this.httpService.logout(token).subscribe();
-  }
-
 }

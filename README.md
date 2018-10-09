@@ -2,14 +2,14 @@
 MEAN Stack QnA site
 
 ## Run dev server
-1. Create server/config/congig.json file.
-Set port number, mongodb_url, jwt_secret as below:
+1. Create server/config/config.json file.
+Set mongodb_url for database:
 ```
 {
     "development": {
-        "PORT": ---,
+        "PORT": 3000,
         "MONGODB_URL": "---"
-        "JWT_SECRET": "---"
+        "JWT_SECRET": "random_string"
     }
 }
 ```

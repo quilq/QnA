@@ -12,7 +12,7 @@
 }
 
 .left, .right{
-    padding: 2%;
+    padding: 2% 3%;
 }
 
 .all-questions {
@@ -38,6 +38,10 @@ textarea{
 
 .top-margin{
     margin-top: 3%;
+}
+
+.no-padding {
+    padding: 0;
 }
 
 mat-divider.margin{

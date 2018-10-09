@@ -73,7 +73,7 @@ export class UserComponent implements OnInit {
     this.httpService.updateQuestion(oldQuestion, newQuestion).subscribe((response) => {
       console.log('update', response);
       this.questionService.getQuestions();
-    });
+    }, (error) => {this.userService.handleError(error)});
   }
 
   onUpdate(i: number, newQuestion: string) {
@@ -86,7 +86,7 @@ export class UserComponent implements OnInit {
     this.httpService.deleteQuestion(question).subscribe((response) => {
       console.log('delete', response);
       this.questionService.getQuestions();
-    });
+    }, (error) => {this.userService.handleError(error)});
   }
   
   onDeleteQuestion(i: number) {
@@ -101,7 +101,7 @@ export class UserComponent implements OnInit {
         console.log(question);
         this.userQuestions.splice(0,0,question);
         this.questionService.getQuestions();
-      });
+      }, (error) => {this.userService.handleError(error)});
       this.open = false;
     } else {
       this.router.navigate(['/login']);

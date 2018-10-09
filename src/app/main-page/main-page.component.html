@@ -26,7 +26,7 @@
       </mat-expansion-panel>
     </div>
 
-    <a (click)="showPopularTags()" mat-button class="bigSize no-hover-effect top-margin">Recent Questions</a>
+    <a (click)="showPopularTags()" mat-button class="bigSize no-hover-effect top-margin no-padding">Recent Questions</a>
 
     <div *ngFor="let question of questionsToShow; let i = index" class="all-questions">
       <div fxLayout="row" fxLayoutAlign="space-between none">

@@ -49,7 +49,7 @@ UserSchema.methods.generateAuthToken = function () {
     var user = this;
     var access = 'auth';
 
-    var token = jwt.sign({ _id: user._id.toHexString(), access }, process.env.JWT_SECRET).toString();
+    var token = jwt.sign({ _id: user._id.toHexString(), access }, process.env.JWT_SECRET, {expiresIn: '1d'}).toString();
     return Promise.resolve(token);
 }
 
@@ -84,13 +84,11 @@ UserSchema.statics.findByToken = function(token){
         decoded = jwt.verify(token, process.env.JWT_SECRET);
 
     } catch(e){
-        return Promise.reject();
+        return Promise.reject(e);
     }
 
     return User.findOne({
         _id: decoded._id,
-        // 'tokens.token':token,
-        // 'tokens.access':'auth'
     });
 }
 
