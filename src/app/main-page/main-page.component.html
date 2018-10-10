@@ -30,8 +30,8 @@
 
     <div *ngFor="let question of questionsToShow; let i = index" class="all-questions">
       <div fxLayout="row" fxLayoutAlign="space-between none">
-        <div>
-          <h2 [routerLink]="['/answers', question._id]" class="hight-light">
+        <mat-card>
+          <h2 [routerLink]="['/answers', question._id]" class="hight-light question">
             Q. {{question.question}}
           </h2>
           <button mat-stroked-button color="primary" [routerLink]="['/answers', question._id]">
@@ -45,9 +45,8 @@
             {{question.askedByUser}}
           </p>
 
-        </div>
+        </mat-card>
       </div>
-      <mat-divider></mat-divider>
     </div>
 
     <mat-paginator [length]="totalItems" [pageSize]="itemsPerPage" [pageSizeOptions]="itemsPerPageOptions"

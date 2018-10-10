@@ -1,9 +1,17 @@
+mat-divider.margin{
+    margin: 3% 0%;
+}
+
+mat-card{
+    width: 100%;
+}
+
 .full-page{
     min-height: 90vh;
 }
 
 .hight-light:hover{
-    color: blue;
+    color: #33b5e5;
     cursor: pointer;
 }
 
@@ -44,6 +52,6 @@ textarea{
     padding: 0;
 }
 
-mat-divider.margin{
-    margin: 3% 0%;
+.question{
+    padding-bottom: 3px;
 }
