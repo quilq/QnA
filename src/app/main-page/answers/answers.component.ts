@@ -68,6 +68,7 @@ export class AnswersComponent implements OnInit {
     })
   }
 
+
   viewQiestion(question) {
     this.question = question;
     this.answers = question.answers;
@@ -91,12 +92,17 @@ export class AnswersComponent implements OnInit {
     }
   }
 
-  onAddAnswer(answer: string) {
+  onAddAnswer(answerElement: HTMLInputElement) {
+    let answer = answerElement.value;
     let canAddAnswer = true;
     for (let i = 0; i < this.answers.length; i++) {
       if (this.answers[i].answer === answer) {
         canAddAnswer = false;
+        this.duplicateAnswer = true;
         break;
+      } else if (this.answers[i].answeredByUser === this.user.username) {
+        canAddAnswer = false;
+        alert('You\'ve answered this question');
       }
     }
     if (canAddAnswer) {
@@ -107,9 +113,8 @@ export class AnswersComponent implements OnInit {
       this.answers.push(newAnswer);
       this.duplicateAnswer = false;
       this.open = false;
-    } else {
-      this.duplicateAnswer = true;
     }
+    answerElement.value = '';
   }
 
   onUpdateAnswer(i: number) {

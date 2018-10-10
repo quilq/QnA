@@ -49,10 +49,11 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  findQuestions(value: string) {
+  findQuestions(searchElement: HTMLInputElement) {
+    let value = searchElement.value;
     this.questionService.findQuestions(value);
     this.opened = !this.opened;
-
+    searchElement.value = '';
   }
 
   filterTag(tag: string) {

@@ -3,6 +3,10 @@ mat-expansion-panel {
     margin-top: 3%;
 }
 
+mat-tab-group {
+    margin-top: 3%; 
+}
+
 .container{
     margin: 2%;
     min-height: 100vh;

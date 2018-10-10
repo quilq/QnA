@@ -112,11 +112,13 @@ export class MainPageComponent implements OnInit, AfterViewInit {
     this.totalItems = this.filteredQuestions.length;
   }
 
-  findQuestions(value: string) {
+  findQuestions(searchElement: HTMLInputElement) {
+    let value = searchElement.value;
     this.filteredQuestions = this.allQuestions.filter(question => question.question.includes(value));
     this.paginator.pageIndex = 0;
     this.pageIndex = this.paginator.pageIndex;
     this.setPageView();
+    searchElement.value = '';
   }
 
   filterTag(tag: string) {

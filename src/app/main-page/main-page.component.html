@@ -32,7 +32,7 @@
       <div fxLayout="row" fxLayoutAlign="space-between none">
         <div>
           <h2 [routerLink]="['/answers', question._id]" class="hight-light">
-            {{question.question}}
+            Q. {{question.question}}
           </h2>
           <button mat-stroked-button color="primary" [routerLink]="['/answers', question._id]">
             {{question.answers.length}} answers
@@ -61,7 +61,7 @@
         <input matInput type="search" placeholder="Search" #search>
       </mat-form-field>
       <a mat-button>
-        <mat-icon (click)="findQuestions(search.value)">search</mat-icon>
+        <mat-icon (click)="findQuestions(search)">search</mat-icon>
       </a>
     </div>
     <a (click)="showPopularTags()" mat-button class="bigSize no-hover-effect">Popular tags</a>

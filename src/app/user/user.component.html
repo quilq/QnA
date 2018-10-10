@@ -68,7 +68,7 @@
           <mat-divider></mat-divider>
         </div>
       </mat-tab>
-      <mat-tab label="You have answered">
+      <mat-tab label="Your answers">
         <mat-list>
           <mat-list-item *ngFor="let question of userAnswers; let i = index ">
             <p matLine [routerLink]="['/answers', question._id]" class="hover">Q. {{question.question}}</p>

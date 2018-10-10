@@ -20,8 +20,6 @@ export class UserService {
   onGetUser() {
     if (localStorage.getItem('token')) {
       this.httpService.getUser().subscribe((info: any) => {
-        console.log(info);
-
         this.user$.next(info.user);
         this.userQuestions$.next(info.userQuestions);
         this.userAnswers$.next(info.userAnswers);
