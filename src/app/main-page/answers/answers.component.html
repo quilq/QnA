@@ -15,7 +15,7 @@
                 <mat-icon matSuffix >{{answers[i].isCorrectAnswer ? 'done_all' : '' }}</mat-icon>
             </div>
 
-            <mat-card fxLayout="row" fxLayoutAlign="space-between none">
+            <div fxLayout="row" fxLayoutAlign="space-between none">
                 <p>{{answers[i].answer}}</p>
                 <div fxLayout="row" *ngIf="canEdit()">
                     <button (click)="onUpdateAnswer(i)" mat-icon-button matTooltip="Edit answer">
@@ -28,7 +28,7 @@
                         <mat-icon class="small-icon" matSuffix>done_all</mat-icon>
                     </button>
                 </div>
-            </mat-card>
+            </div>
             <div *ngIf="editable[i]">
                 <mat-form-field>
                     <textarea matInput placeholder="Your new answer" #newAnswer></textarea>

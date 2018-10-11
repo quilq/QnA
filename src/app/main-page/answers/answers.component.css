@@ -22,10 +22,14 @@
 .all-answers{
     margin: 1% 2%;
     padding: 1%;
+    word-wrap: break-word;
+    word-break: break-all; 
 }
 
 .related-questions{
     margin-top: 5%;
+    word-wrap: break-word;
+    word-break: break-all; 
 }
 
 mat-form-field {

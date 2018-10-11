@@ -1,5 +1,8 @@
 require('./config/config');
 
+const compression = require('compression');
+const helmet = require('helmet');
+
 const express = require('express');
 const http = require('http');
 const path = require('path');
@@ -16,6 +19,9 @@ app.use(express.static(publicPath));
 //Parser
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+app.use(compression());
+app.use(helmet());
 
 //API for interacting with MongoDB (after body-parser middleware)
 const api = require('./routes/api');

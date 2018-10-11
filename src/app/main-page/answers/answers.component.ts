@@ -34,9 +34,9 @@ export class AnswersComponent implements OnInit {
   answers: Answer[] = [new Answer()];
   question: Question = new Question();
   relatedQuestions: Question[] = [new Question()];
+  allQuestions: Question[] = [new Question()];
   userAnswers: Question[] = [new Question()];
   editable: boolean[] = [];
-  allQuestions: Question[] = [];
   isLoggedin = false;
 
   ngOnInit() {
@@ -48,6 +48,15 @@ export class AnswersComponent implements OnInit {
       for (let i = 0; i < this.answers.length; i++) {
         this.editable[i] = false;
       }
+
+      this.questionService.allQuestions$.subscribe((questions: Question[]) => {
+        this.allQuestions = questions;
+        this.relatedQuestions = this.allQuestions.filter(question => {          
+          if ((question.tag === this.question.tag) && (question.question !== this.question.question)) {
+            return question;
+          }
+        });
+      })
     });
 
     this.userService.checkUser$.subscribe(isLoggedin => {
@@ -61,11 +70,6 @@ export class AnswersComponent implements OnInit {
     this.userService.userAnswers$.subscribe(userAnswers => {
       this.userAnswers = userAnswers;
     });
-
-    this.questionService.allQuestions$.subscribe(questions => {
-      this.allQuestions = questions;
-      this.relatedQuestions = this.allQuestions.filter(question => question.tag === this.question.tag);
-    })
   }
 
 
@@ -76,6 +80,11 @@ export class AnswersComponent implements OnInit {
     for (let i = 0; i < this.answers.length; i++) {
       this.editable[i] = false;
     }
+    this.relatedQuestions = this.allQuestions.filter(question => {          
+      if ((question.tag === this.question.tag) && (question.question !== this.question.question)) {
+        return question;
+      }
+    });
   }
 
   canEdit() {

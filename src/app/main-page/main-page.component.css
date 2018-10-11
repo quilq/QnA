@@ -26,6 +26,8 @@ mat-card{
 .all-questions {
     margin: 1% 2%;
     padding: 1%;
+    word-wrap: break-word;
+    word-break: break-all; 
 }
 
 .all-tags {

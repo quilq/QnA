@@ -18,11 +18,13 @@
       </mat-expansion-panel-header>
       <div fxLayout="column">
         <mat-form-field appearance="outline">
-          <textarea matInput ngModel placeholder="Your question" rows="3" #newQuestion="ngModel" autocomplete="off" required #newQuestion1></textarea>
+          <textarea matInput ngModel placeholder="Your question" rows="3" #newQuestion="ngModel" autocomplete="off"
+            required #newQuestion1></textarea>
           <mat-error *ngIf="newQuestion.invalid">Required</mat-error>
         </mat-form-field>
         <mat-form-field appearance="fill">
-          <input matInput ngModel matInput placeholder="tag" appearance="legacy" autocomplete="off" #tag="ngModel" required #tag1>
+          <input matInput ngModel matInput placeholder="tag" appearance="legacy" autocomplete="off" #tag="ngModel"
+            required #tag1>
           <mat-error *ngIf="tag.invalid">Required</mat-error>
         </mat-form-field>
       </div>
@@ -37,7 +39,6 @@
           <div fxLayout="row" fxLayoutAlign="space-between none" class="all-questions">
             <div>
               <p [routerLink]="['/answers', question._id]" class="hover hight-light">Q. {{question.question}} </p>
-              <div></div>
               <button mat-stroked-button color="primary" [routerLink]="['/answers', question._id]">
                 {{question.answers.length}} answers
               </button>
@@ -69,18 +70,16 @@
         </div>
       </mat-tab>
       <mat-tab label="Your answers">
-        <mat-list>
-          <mat-list-item *ngFor="let question of userAnswers; let i = index ">
-            <p matLine [routerLink]="['/answers', question._id]" class="hover">Q. {{question.question}}</p>
-            <p matLine>
-              <mat-icon class="small-icon">folder</mat-icon> {{question.tag}}
-            </p>
-            <div matLine *ngFor="let answer of userAnswers[i].answers" class="hover hight-light" [routerLink]="['/answers', question._id]">
-              <p *ngIf="answer.answeredByUser === user.username">A. {{ answer.answer }}</p>
-            </div>
-            <mat-divider></mat-divider>
-          </mat-list-item>
-        </mat-list>
+        <div *ngFor="let question of userAnswers; let i = index " fxLayout="column" fxLayoutAlign="space-between none" class="all-answers">
+          <p [routerLink]="['/answers', question._id]" class="hover">Q. {{question.question}}</p>
+          <p>
+            <mat-icon class="small-icon">folder</mat-icon> {{question.tag}}
+          </p>
+          <div *ngFor="let answer of userAnswers[i].answers" class="hover hight-light" [routerLink]="['/answers', question._id]">
+            <p *ngIf="answer.answeredByUser === user.username">A. {{ answer.answer }}</p>
+          </div>
+          <mat-divider></mat-divider>
+        </div>
       </mat-tab>
     </mat-tab-group>
   </div>
