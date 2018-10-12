@@ -35,9 +35,9 @@ export class MainPageComponent implements OnInit, AfterViewInit {
   open = false;
 
   pageIndex: number = 0;
-  itemsPerPage: number = 3;
+  itemsPerPage: number = 5;
   totalItems: number = 0;
-  itemsPerPageOptions: number[] = [3, 6];
+  itemsPerPageOptions: number[] = [5, 10];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 

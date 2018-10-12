@@ -37,7 +37,7 @@ mat-expansion-panel{
 }
 
 .related-questions{
-    margin-top: 5%;
+    margin-top: 8%;
 }
 
 
@@ -53,4 +53,9 @@ mat-expansion-panel{
 
 #accepted-answer{
     color: #3a00db;
+}
+
+.user{
+    font-style: italic;
+    font-weight: bold;
 }

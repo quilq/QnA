@@ -55,3 +55,8 @@ textarea{
 .question{
     padding-bottom: 3px;
 }
+
+.user{
+    font-style: italic;
+    font-weight: bold;
+}
