@@ -1,3 +1,15 @@
+mat-divider.margin{
+    margin: 3% 0%;
+}
+
+mat-form-field {
+    width: 100%;
+}
+
+mat-expansion-panel{
+    margin: 0 !important;
+}
+
 .full-page{
     min-height: 90vh;
 }
@@ -22,23 +34,12 @@
 .all-answers{
     margin: 1% 2%;
     padding: 1%;
-    word-wrap: break-word;
-    word-break: break-all; 
 }
 
 .related-questions{
     margin-top: 5%;
-    word-wrap: break-word;
-    word-break: break-all; 
 }
 
-mat-form-field {
-    width: 100%;
-}
-
-mat-expansion-panel{
-    margin: 0 !important;
-}
 
 .hight-light:hover{
     color: #33b5e5;
@@ -50,6 +51,6 @@ mat-expansion-panel{
     margin: 2% 0% 0% 2%;
 }
 
-mat-divider.margin{
-    margin: 3% 0%;
+#accepted-answer{
+    color: #3a00db;
 }

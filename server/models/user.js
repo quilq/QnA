@@ -45,7 +45,7 @@ UserSchema.pre('save', function (next) {
 
 //Generate token with instance method
 UserSchema.methods.generateAuthToken = function () {
-    //Avoid arrow function to use 'this' keyword
+    //Avoid arrow function for 'this' keyword
     var user = this;
     var access = 'auth';
 

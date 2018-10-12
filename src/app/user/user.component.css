@@ -4,7 +4,7 @@ mat-expansion-panel, mat-tab-group {
 }
 
 mat-card {
-    margin-top: -3%;
+    margin-top: 0%;
 }
 
 .container{
@@ -27,8 +27,6 @@ mat-card {
 
 .all-questions, .all-answers {
     margin: 1% 2%;
-    word-wrap: break-word;
-    word-break: break-all; 
 }
 
 .hight-light{

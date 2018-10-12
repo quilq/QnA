@@ -5,6 +5,7 @@
     box-sizing: border-box;
     margin: 0;
     font-family: 'Open Sans', sans-serif;
+    word-wrap: break-word;
 }
 
 .no-hover-effect.mat-button .mat-button-focus-overlay {

@@ -47,13 +47,18 @@
               </p>
 
             </div>
-            <span fxLayout="row" *ngIf="canEdit()">
-              <button (click)="onUpdateQuestion(i)" mat-icon-button matTooltip="Edit question">
-                <mat-icon class="small-icon" matSuffix>edit</mat-icon>
+            <span *ngIf="canEdit()">
+              <button mat-icon-button [matMenuTriggerFor]="appMenu">
+                <mat-icon>more_vert</mat-icon>
               </button>
-              <button (click)="onDeleteQuestion(i)" mat-icon-button matTooltip="Delete question">
-                <mat-icon class="small-icon" matSuffix>clear</mat-icon>
-              </button>
+              <mat-menu #appMenu="matMenu">
+                <button (click)="onUpdateQuestion(i)" matTooltip="Edit this question" mat-menu-item>
+                  <mat-icon class="small-icon" matSuffix>edit</mat-icon> Edit
+                </button>
+                <button (click)="onDeleteQuestion(i)" matTooltip="Delete this question" mat-menu-item>
+                  <mat-icon class="small-icon" matSuffix>clear</mat-icon> Delete
+                </button>
+              </mat-menu>
             </span>
           </div>
 
