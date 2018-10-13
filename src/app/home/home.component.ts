@@ -87,6 +87,9 @@ export class HomeComponent implements OnInit {
     if (this.opened) {
       this.opened = !this.opened;
     }
+    if (!this.onMainPage){
+      this.router.navigate(['/']);
+    }
   }
 
   onLogout() {
