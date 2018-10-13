@@ -41,7 +41,6 @@ export class MainPageComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-
   ngOnInit() {
     this.userService.checkUser$.subscribe(isLoggedin => {
       this.isLoggedin = isLoggedin;
@@ -57,8 +56,7 @@ export class MainPageComponent implements OnInit, AfterViewInit {
 
     this.questionService.allQuestions$.subscribe((questions: Question[]) => {
       this.allQuestions = questions;
-      this.filteredQuestions = questions;
-      this.questionsToShow = questions;
+
       this.paginator.pageIndex = 0;
       this.pageIndex = this.paginator.pageIndex;
 
@@ -78,7 +76,6 @@ export class MainPageComponent implements OnInit, AfterViewInit {
     this.questionService.allTags$.subscribe((tags: string[]) => {
       this.allTags = tags;
     })
-    
   }
 
   ngAfterViewInit() {

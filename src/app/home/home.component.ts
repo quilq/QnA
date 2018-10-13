@@ -22,6 +22,7 @@ export class HomeComponent implements OnInit {
   onMainPage = false;
   onUserPage = false;
 
+
   ngOnInit() {
     this.userService.onGetUser();
     
@@ -49,6 +50,26 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  showUnansweredQuestions(){
+    this.questionService.showUnansweredQuestions();
+    if (!this.onMainPage){
+      this.router.navigate(['/']);
+    }
+    if (this.opened) {
+      this.opened = !this.opened;
+    }
+  }
+
+  showCommonQuestions(){
+    this.questionService.showPopularTags();
+    if (!this.onMainPage){
+      this.router.navigate(['/']);
+    }
+    if (this.opened) {
+      this.opened = !this.opened;
+    }
+  }
+
   findQuestions(searchElement: HTMLInputElement) {
     let value = searchElement.value;
     this.questionService.findQuestions(value);
@@ -63,7 +84,9 @@ export class HomeComponent implements OnInit {
 
   showPopularTags() {
     this.questionService.showPopularTags();
-    this.opened = !this.opened;
+    if (this.opened) {
+      this.opened = !this.opened;
+    }
   }
 
   onLogout() {

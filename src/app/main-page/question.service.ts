@@ -37,6 +37,11 @@ export class QuestionService {
     });
   }
 
+  showUnansweredQuestions(){
+    let unansweredQuestions = this.allQuestions.filter(question => question.answers.length === 0);
+    this.filteredQuestions$.next(unansweredQuestions);
+  }
+
   findQuestions(value: string) {
       this.filteredQuestions = this.allQuestions.filter(question => question.question.includes(value));
       this.filteredQuestions$.next(this.filteredQuestions);

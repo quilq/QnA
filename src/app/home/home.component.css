@@ -4,7 +4,6 @@ mat-form-field {
 }
 
 mat-toolbar {
-    background-color: #33b5e5;
     z-index: 1000;
     position: fixed;
     top: 0;
@@ -13,6 +12,19 @@ mat-toolbar {
 mat-card {
     margin: 2%;
     background-color: #ffffff;
+}
+
+#first-toolbar-row{
+    background-color: #33b5e5;
+}
+
+#second-toolbar-row{
+    background-color: #86b4f8;
+}
+
+#second-toolbar-row button{
+    margin: 0px 4px;
+    padding: 0px 6px;
 }
 
 .sidenav-button {
@@ -40,11 +52,19 @@ mat-card {
     font-size: 1.5em;
 }
 
+.md {
+    font-size: 1.2em;
+}
+
 .search-icon:hover{
     cursor: pointer;
 }
 
-.offset{
+.offset1{
+    margin-top: 128px;
+}
+
+.offset2{
     margin-top: 64px;
 }
 
