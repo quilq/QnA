@@ -26,8 +26,7 @@
       <mat-toolbar fxShow [fxHide]="onUserPage">
         <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center" id="first-toolbar-row">
           <div fxLayout="row">
-            <button mat-button (click)="drawer.toggle()" class="sidenav-button">
-                <!-- <button mat-button (click)="drawer.toggle()" class="sidenav-button" fxHide [fxShow.lt-lg]="onMainPage"> -->
+            <button mat-button (click)="drawer.toggle()" class="sidenav-button" fxShow [fxHide.gt-md]="onMainPage">
               <mat-icon class="title">{{opened ? 'close': 'menu'}}</mat-icon>
             </button>
             <a (click)="showPopularTags()" mat-button color="primary" class="white-font no-hover-effect title no-padding">
@@ -54,8 +53,10 @@
           </div>
         </mat-toolbar-row>
         <mat-toolbar-row id="second-toolbar-row" fxShow [fxHide.lt-md]="true">
-          <button mat-stroked-button color="primary"  class="white-font" (click)="showCommonQuestions()">Popular questions</button>
-          <button mat-stroked-button color="primary"  class="white-font" (click)="showUnansweredQuestions()">Unanswered questions</button>
+          <button mat-stroked-button color="primary" class="white-font" (click)="showCommonQuestions()">Popular
+            questions</button>
+          <button mat-stroked-button color="primary" class="white-font" (click)="showUnansweredQuestions()">Unanswered
+            questions</button>
         </mat-toolbar-row>
       </mat-toolbar>
 
