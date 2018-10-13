@@ -20,6 +20,7 @@ mat-card {
 
 #second-toolbar-row{
     background-color: #50c5f0;
+    height: 52px;
 }
 
 #second-toolbar-row button{
@@ -61,7 +62,7 @@ mat-card {
 }
 
 .offset1{
-    margin-top: 128px;
+    margin-top: 116px;
 }
 
 .offset2{
