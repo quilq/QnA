@@ -6,10 +6,12 @@
         <mat-icon class="search-icon" mat-icon-button matSuffix (click)="findQuestions(search)">search</mat-icon>
       </mat-form-field>
     </mat-card>
-    <mat-card fxHide [fxShow.lt-md]="true">
-      <button mat-button (click)="showCommonQuestions()" class="md">Popular questions</button>
-      <button mat-button (click)="showUnansweredQuestions()" class="md">Unanswered questions</button>
-    </mat-card>
+    <div fxHide [fxShow.lt-md]="true">
+      <mat-card class="no-margin">
+        <div (click)="showCommonQuestions()" class="md">Popular questions</div>
+        <div (click)="showUnansweredQuestions()" class="md">Unanswered questions</div>
+      </mat-card>
+    </div>
     <mat-card>
       <a (click)="showPopularTags()" mat-button class="title no-hover-effect no-padding">Popular tags</a>
       <mat-list *ngFor="let tag of allTags" class="tag">
@@ -24,7 +26,8 @@
       <mat-toolbar fxShow [fxHide]="onUserPage">
         <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center" id="first-toolbar-row">
           <div fxLayout="row">
-            <button mat-button (click)="drawer.toggle()" class="sidenav-button" fxHide [fxShow.lt-lg]="onMainPage">
+            <button mat-button (click)="drawer.toggle()" class="sidenav-button">
+                <!-- <button mat-button (click)="drawer.toggle()" class="sidenav-button" fxHide [fxShow.lt-lg]="onMainPage"> -->
               <mat-icon class="title">{{opened ? 'close': 'menu'}}</mat-icon>
             </button>
             <a (click)="showPopularTags()" mat-button color="primary" class="white-font no-hover-effect title no-padding">

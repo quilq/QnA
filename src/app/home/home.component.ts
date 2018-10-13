@@ -75,11 +75,17 @@ export class HomeComponent implements OnInit {
     this.questionService.findQuestions(value);
     this.opened = !this.opened;
     searchElement.value = '';
+    if (!this.onMainPage){
+      this.router.navigate(['/']);
+    }
   }
 
   filterTag(tag: string) {
     this.questionService.filterTag(tag);
     this.opened = !this.opened;
+    if (!this.onMainPage){
+      this.router.navigate(['/']);
+    }
   }
 
   showPopularTags() {
@@ -97,6 +103,9 @@ export class HomeComponent implements OnInit {
       localStorage.removeItem('token');
       this.userService.onGetUser();
       this.httpService.logout().subscribe();
+    }
+    if (!this.onMainPage){
+      this.router.navigate(['/']);
     }
   }
 }
