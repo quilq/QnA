@@ -29,7 +29,7 @@ export class UserService {
     this.checkUser$.next((localStorage.getItem('token') != null));
   }
 
-  handleError(error){
+  handleError(error: any){
     if (error.error.name === 'TokenExpiredError'){
       localStorage.removeItem('token');
       alert('Session expired. Please log in to continue !');

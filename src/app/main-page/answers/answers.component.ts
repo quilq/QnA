@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../../http.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../user/user.service';
-import { Answer, Question } from '../question';
-import { User } from '../../user/user';
+import { Answer, Question } from '../question.model';
+import { User } from '../../user/user.model';
 import { QuestionService } from '../question.service';
 
 @Component({

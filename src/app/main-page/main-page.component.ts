@@ -4,8 +4,8 @@ import { Router } from '@angular/router';
 import { UserService } from '../user/user.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { tap } from 'rxjs/operators';
-import { Question } from './question';
-import { User } from '../user/user';
+import { Question } from './question.model';
+import { User } from '../user/user.model';
 import { QuestionService } from './question.service';
 
 @Component({
