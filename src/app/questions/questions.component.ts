@@ -15,7 +15,7 @@ import { QuestionService } from './question.service';
   styleUrls: ['./questions.component.css']
 })
 
-export class MainPageComponent implements OnInit, AfterViewInit {
+export class QuestionsComponent implements OnInit, AfterViewInit {
 
   constructor(private httpService: HttpService,
     private userService: UserService,

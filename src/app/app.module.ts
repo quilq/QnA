@@ -12,7 +12,7 @@ import { FooterComponent } from './core/footer/footer.component';
 import { UserComponent } from './auth/user/user.component';
 import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
-import { MainPageComponent } from './questions/questions.component';
+import { QuestionsComponent } from './questions/questions.component';
 import { AnswersComponent } from './answers/answers.component';
 
 @NgModule({
@@ -23,7 +23,7 @@ import { AnswersComponent } from './answers/answers.component';
     UserComponent,
     LoginComponent,
     SignupComponent,
-    MainPageComponent,
+    QuestionsComponent,
     AnswersComponent
   ],
   imports: [
