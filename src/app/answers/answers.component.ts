@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpService } from '../../http.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UserService } from '../../user/user.service';
-import { Answer, Question } from '../question.model';
-import { User } from '../../user/user.model';
-import { QuestionService } from '../question.service';
+import { HttpService } from '../http.service';
+import { UserService } from '../auth/user/user.service';
+import { QuestionService } from '../questions/question.service';
+import { Answer } from './answer.model';
+import { User } from '../auth/user/user.model';
+import { Question } from '../questions/question.model';
+
 
 @Component({
   selector: 'app-answers',

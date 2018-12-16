@@ -12,9 +12,9 @@ const port = process.env.PORT;
 const app = express();
 const server = http.createServer(app);
 
-setInterval(function() {
-    http.get('https://pacific-dusk-80792.herokuapp.com');
-}, 1800000);
+// setInterval(function() {
+//     http.get('https://pacific-dusk-80792.herokuapp.com');
+// }, 1800000);
 
 app.use(compression());
 app.use(helmet());

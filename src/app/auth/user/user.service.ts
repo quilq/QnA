@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpService } from '../http.service';
+import { HttpService } from '../../http.service';
 import { BehaviorSubject, ReplaySubject } from 'rxjs';
 import { Router } from '@angular/router';
 

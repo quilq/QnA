@@ -47,7 +47,6 @@ UserSchema.pre('save', function (next) {
 UserSchema.methods.generateAuthToken = function () {
     //Avoid arrow function for 'this' keyword
     var user = this;
-    var access = 'auth';
 
     var token = jwt.sign({ _id: user._id.toHexString(), access }, process.env.JWT_SECRET, {expiresIn: '1d'}).toString();
     return Promise.resolve(token);

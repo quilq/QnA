@@ -1,17 +1,18 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { HttpService } from '../http.service';
 import { Router } from '@angular/router';
-import { UserService } from '../user/user.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { tap } from 'rxjs/operators';
+
+import { HttpService } from '../http.service';
+import { UserService } from '../auth/user/user.service';
 import { Question } from './question.model';
-import { User } from '../user/user.model';
+import { User } from '../auth/user/user.model';
 import { QuestionService } from './question.service';
 
 @Component({
-  selector: 'app-main-page',
-  templateUrl: './main-page.component.html',
-  styleUrls: ['./main-page.component.css']
+  selector: 'app-questions',
+  templateUrl: './questions.component.html',
+  styleUrls: ['./questions.component.css']
 })
 
 export class MainPageComponent implements OnInit, AfterViewInit {
